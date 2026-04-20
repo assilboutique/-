@@ -22,18 +22,9 @@ body { font-family: Arial, sans-serif; padding: 15px; background: #FDF8F2; direc
 .m-btn { display: block; width: 100%; padding: 10px 0; margin-top: 14px; background: #2C1810; color: #FAC775; border: none; border-radius: 10px; font-size: 14px; cursor: pointer; text-align: center; text-decoration: none; font-weight: bold; }
 .m-btn:hover { background: #854F0B; }
 .fermer { position: absolute; top: 10px; left: 14px; font-size: 22px; cursor: pointer; color: #2C1810; font-weight: bold; }
-.tri-bar { margin-bottom: 20px; display: flex; gap: 10px; justify-content: center; }
-.tri-btn { background: #2C1810; color: #FAC775; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 13px; font-weight: bold; }
-.tri-btn:hover { background: #854F0B; }
 </style>
 </head>
 <body>
-
-<div class="tri-bar">
-  <button class="tri-btn" onclick="trierPrixCroissant()">💰 السعر من الأقل إلى الأعلى</button>
-  <button class="tri-btn" onclick="trierPrixDecroissant()">💰 السعر من الأعلى إلى الأقل</button>
-  <button class="tri-btn" onclick="afficherTous()">🔄 إعادة تعيين</button>
-</div>
 
 <div id="liste"></div>
 <div id="modal" style="display:none">
@@ -43,51 +34,31 @@ body { font-family: Arial, sans-serif; padding: 15px; background: #FDF8F2; direc
 <script>
 const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfp6xNDTfmJww7bnKDr0SNOrCuUCDucVW-aYLJeilW_SsDS6A/viewform?usp=header";
 
-// Prix stockés comme NOMBRES (en DA)
 const produits = [
-  { nom: "عسل طبيعي", region: "الجزائر", matiere: "نقي ١٠٠٪", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن والفيتامينات. 500 غ.", prix: 2000, prixTexte: "2 000 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/1.jpg" },
-  { nom: "عسل الكاليبتوس", region: "سكيكدة — عنابة", matiere: "نقي ١٠٠٪", desc: "عسل الكاليبتوس الطبيعي. مفيد للجهاز التنفسي والمناعة. 1 كغ.", prix: 2300, prixTexte: "2 300 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/2.jpg" },
-  { nom: "عسل الليمون", region: "عنابة", matiere: "نقي ١٠٠٪", desc: "عسل الليمون الطبيعي. طعم منعش وفوائد صحية رائعة. 500 غ.", prix: 2100, prixTexte: "2 100 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/3.jpg" },
-  { nom: "عسل السدر", region: "جبال الأوراس", matiere: "نقي ١٠٠٪", desc: "من أجود أنواع العسل الجزائري. نقي ١٠٠٪ بدون إضافات. 1 كغ.", prix: 2500, prixTexte: "2 500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/4.jpg" },
-  { nom: "زيت الأرجان", region: "تندوف", matiere: "مستخلص يدوياً", desc: "زيت الأرجان الطبيعي. مستخلص يدوياً للبشرة والشعر والأظافر. 30 مل.", prix: 3500, prixTexte: "3 500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/5.jpg" },
-  { nom: "زيت الخروع", region: "الجزائر", matiere: "طبيعي ١٠٠٪", desc: "زيت الخروع الطبيعي. لتكثيف الشعر وتقوية الأظافر وترطيب البشرة.", prix: 1400, prixTexte: "1 400 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/6.jpg" },
-  { nom: "زيت التين الشوكي", region: "ورقلة", matiere: "نباتي وعذري", desc: "زيت التين الشوكي النادر. مضاد للشيخوخة. بدون ملونات ولا مواد حافظة. 30 مل.", prix: 4500, prixTexte: "4 500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/7.jpg" },
-  { nom: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر ١٠٠٪", desc: "زيت الحبة السوداء الطبيعي. شفاء من كل داء. معصور بارداً. 125 مل.", prix: 1800, prixTexte: "1 800 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/8.jpg" },
-  { nom: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "زيت الزيتون البكر الممتاز. معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", prix: 1900, prixTexte: "1 900 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/9.jpg" },
-  { nom: "ماء الأرز", region: "الجزائر", matiere: "طبيعي ١٠٠٪", desc: "ماء الأرز الطبيعي. مرطّب ومنعش للبشرة. يقوّي الشعر ويمنحه البريق.", prix: 1200, prixTexte: "1 200 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/10.jpg" },
-  { nom: "ماء اللافندر", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "ماء اللافندر الطبيعي. مهدئ ومنوّم طبيعي. للوسادة والبشرة والشعر.", prix: 1600, prixTexte: "1 600 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/11.jpg" },
-  { nom: "ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", prix: 1000, prixTexte: "1 000 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" },
+  { nom: "عسل طبيعي", region: "الجزائر", matiere: "نقي 100%", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن والفيتامينات. 500 غ.", prix: "2,000 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/1.jpg" },
+  { nom: "عسل الكاليبتوس", region: "سكيكدة — عنابة", matiere: "نقي 100%", desc: "عسل الكاليبتوس الطبيعي. مفيد للجهاز التنفسي والمناعة. 1 كغ.", prix: "2,300 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/2.jpg" },
+  { nom: "عسل الليمون", region: "عنابة", matiere: "نقي 100%", desc: "عسل الليمون الطبيعي. طعم منعش وفوائد صحية رائعة. 500 غ.", prix: "2,100 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/3.jpg" },
+  { nom: "عسل السدر", region: "جبال الأوراس", matiere: "نقي 100%", desc: "من أجود أنواع العسل الجزائري. نقي 100% بدون إضافات. 1 كغ.", prix: "2,500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/4.jpg" },
+  { nom: "زيت الأرجان", region: "تندوف", matiere: "مستخلص يدوياً", desc: "زيت الأرجان الطبيعي. مستخلص يدوياً للبشرة والشعر والأظافر. 30 مل.", prix: "3,500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/5.jpg" },
+  { nom: "زيت الخروع", region: "الجزائر", matiere: "طبيعي 100%", desc: "زيت الخروع الطبيعي. لتكثيف الشعر وتقوية الأظافر وترطيب البشرة.", prix: "1,400 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/6.jpg" },
+  { nom: "زيت التين الشوكي", region: "ورقلة", matiere: "نباتي وعذري", desc: "زيت التين الشوكي النادر. مضاد للشيخوخة. بدون ملونات ولا مواد حافظة. 30 مل.", prix: "4,500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/7.jpg" },
+  { nom: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر 100%", desc: "زيت الحبة السوداء الطبيعي. شفاء من كل داء. معصور بارداً. 125 مل.", prix: "1,800 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/8.jpg" },
+  { nom: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "زيت الزيتون البكر الممتاز. معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", prix: "1,900 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/9.jpg" },
+  { nom: "ماء الأرز", region: "الجزائر", matiere: "طبيعي 100%", desc: "ماء الأرز الطبيعي. مرطّب ومنعش للبشرة. يقوّي الشعر ويمنحه البريق.", prix: "1,200 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/10.jpg" },
+  { nom: "ماء اللافندر", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "ماء اللافندر الطبيعي. مهدئ ومنوّم طبيعي. للوسادة والبشرة والشعر.", prix: "1,600 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/11.jpg" },
+  { nom: "ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", prix: "1,000 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" }
 ];
 
-let produitsActuels = [...produits];
-
-function afficherListe() {
-  document.getElementById("liste").innerHTML = produitsActuels.map((p, i) => `
-    <div class="produit" onclick="ouvrir(${produits.indexOf(p)})">
-      <img src="${p.photo}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/165x130?text=صورة'">
-      <div class="info">
-        <div class="nom">${p.nom}</div>
-        <div class="region">📍 ${p.region}</div>
-        <div class="prix">${p.prixTexte}</div>
-      </div>
+document.getElementById("liste").innerHTML = produits.map((p, i) => `
+  <div class="produit" onclick="ouvrir(${i})">
+    <img src="${p.photo}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/165x130?text=صورة'">
+    <div class="info">
+      <div class="nom">${p.nom}</div>
+      <div class="region">📍 ${p.region}</div>
+      <div class="prix">💰 ${p.prix}</div>
     </div>
-  `).join("");
-}
-
-function trierPrixCroissant() {
-  produitsActuels = [...produits].sort((a, b) => a.prix - b.prix);
-  afficherListe();
-}
-
-function trierPrixDecroissant() {
-  produitsActuels = [...produits].sort((a, b) => b.prix - a.prix);
-  afficherListe();
-}
-
-function afficherTous() {
-  produitsActuels = [...produits];
-  afficherListe();
-}
+  </div>
+`).join("");
 
 function ouvrir(i) {
   const p = produits[i];
@@ -98,7 +69,7 @@ function ouvrir(i) {
     <div class="m-info">📍 المنطقة : ${p.region}</div>
     <div class="m-info">🌿 المادة : ${p.matiere}</div>
     <div class="m-desc">${p.desc}</div>
-    <div class="m-prix">💰 ${p.prixTexte}</div>
+    <div class="m-prix">💰 ${p.prix}</div>
     <a class="m-btn" href="${formURL}" target="_blank">🛒 اطلب الآن</a>
   `;
   document.getElementById("modal").style.display = "flex";
@@ -107,9 +78,6 @@ function ouvrir(i) {
 function fermer() {
   document.getElementById("modal").style.display = "none";
 }
-
-// Affichage initial
-afficherListe();
 </script>
 </body>
 </html>
