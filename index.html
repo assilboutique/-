@@ -35,23 +35,18 @@ body { font-family: Arial, sans-serif; padding: 15px; background: #FDF8F2; direc
 const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfp6xNDTfmJww7bnKDr0SNOrCuUCDucVW-aYLJeilW_SsDS6A/viewform?usp=header";
 
 const produits = [
-  { nom: "ماء ورد جوري طبيعي", region: "الجزائر العاصمة", matiere: "مقطّر يدوياً", desc: "مقطّر يدوياً. مرطّب ومنعش للبشرة يومياً. 200 مل.", prix: "1 500 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
-  { nom: "ماء زهر البرتقال", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "من أزهار البرتقال الطازجة. للطبخ والعناية بالبشرة. 200 مل.", prix: "1 200 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
-  { nom: "ماء اللافندر الجبلي", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "مهدئ ومنوّم طبيعي. للوسادة والبشرة. 200 مل.", prix: "1 600 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
-  { nom: "ماء الياسمين الجزائري", region: "قسنطينة", matiere: "مقطّر يدوياً", desc: "بديل طبيعي راقٍ للعطر الأنثوي. 100 مل.", prix: "2 000 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
-  { nom: "ماء إكليل الجبل", region: "تيزي وزو", matiere: "مقطّر طبيعي", desc: "يقوّي الشعر ويحفّز النمو الطبيعي. 150 مل.", prix: "1 300 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
-  { nom: "ماء الحامض البلدي", region: "عنابة", matiere: "مقطّر طبيعي", desc: "منقّي ومشرّق للبشرة الدهنية. 150 مل.", prix: "1 100 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
-  { nom: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", prix: "1 900 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
-  { nom: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر", desc: "علاج طبيعي لتقوية المناعة. بارد العصر. 100 مل.", prix: "1 800 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
-  { nom: "زيت بذور التين الشوكي", region: "ورقلة", matiere: "مستخلص يدوياً", desc: "من أغلى الزيوت الجزائرية. مضاد للشيخوخة. 30 مل.", prix: "4 500 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
-  { nom: "زيت الخروع البلدي", region: "الجزائر", matiere: "طبيعي ١٠٠٪", desc: "لتكثيف الشعر وتقوية الأظافر. 150 مل.", prix: "1 400 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
-  { nom: "زيت نواة الدوم", region: "الجنوب الجزائري", matiere: "طبيعي ١٠٠٪", desc: "مضاد للتجاعيد. مغذٍّ عميق للبشرة. 100 مل.", prix: "2 200 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
-  { nom: "زيت الأرقان الجزائري", region: "تندوف", matiere: "مستخلص يدوياً", desc: "مستخلص يدوياً. للبشرة والشعر والأظافر. 100 مل.", prix: "3 500 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
-  { nom: "عسل السدر من الأوراس", region: "جبال الأوراس", matiere: "نقي ١٠٠٪", desc: "من أجود أنواع العسل الجزائري. نقي ١٠٠٪. 500 غ.", prix: "2 500 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
-  { nom: "عسل الثيمون من القبائل", region: "تيزي وزو", matiere: "نقي ١٠٠٪", desc: "غني بالمضادات الحيوية الطبيعية. 500 غ.", prix: "2 800 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
-  { nom: "عسل الكاليتوس", region: "سكيكدة — عنابة", matiere: "نقي ١٠٠٪", desc: "مفيد للجهاز التنفسي والمناعة. 500 غ.", prix: "2 300 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
-  { nom: "عسل السنط الصحراوي", region: "بسكرة — الأغواط", matiere: "نقي ١٠٠٪", desc: "ذهبي شفاف. خفيف الملمس وحلو الطعم. 250 غ.", prix: "3 200 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
-  { nom: "عسل الزعيتر البري", region: "جبال الأطلس", matiere: "نقي ١٠٠٪", desc: "طعم قوي ورائحة عطرية جبلية نادرة. 250 غ.", prix: "3 000 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
+  { nom: "عسل طبيعي", region: "الجزائر", matiere: "نقي ١٠٠٪", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن والفيتامينات. 500 غ.", prix: "2 000 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/1.jpg" },
+  { nom: "عسل الكاليبتوس", region: "سكيكدة — عنابة", matiere: "نقي ١٠٠٪", desc: "عسل الكاليبتوس الطبيعي. مفيد للجهاز التنفسي والمناعة. 1 كغ.", prix: "2 300 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/2.jpg" },
+  { nom: "عسل الليمون", region: "عنابة", matiere: "نقي ١٠٠٪", desc: "عسل الليمون الطبيعي. طعم منعش وفوائد صحية رائعة. 500 غ.", prix: "2 100 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/3.jpg" },
+  { nom: "عسل السدر", region: "جبال الأوراس", matiere: "نقي ١٠٠٪", desc: "من أجود أنواع العسل الجزائري. نقي ١٠٠٪ بدون إضافات. 1 كغ.", prix: "2 500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/4.jpg" },
+  { nom: "زيت الأرجان", region: "تندوف", matiere: "مستخلص يدوياً", desc: "زيت الأرجان الطبيعي. مستخلص يدوياً للبشرة والشعر والأظافر. 30 مل.", prix: "3 500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/5.jpg" },
+  { nom: "زيت الخروع", region: "الجزائر", matiere: "طبيعي ١٠٠٪", desc: "زيت الخروع الطبيعي. لتكثيف الشعر وتقوية الأظافر وترطيب البشرة.", prix: "1 400 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/6.jpg" },
+  { nom: "زيت التين الشوكي", region: "ورقلة", matiere: "نباتي وعذري", desc: "زيت التين الشوكي النادر. مضاد للشيخوخة. بدون ملونات ولا مواد حافظة. 30 مل.", prix: "4 500 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/7.jpg" },
+  { nom: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر ١٠٠٪", desc: "زيت الحبة السوداء الطبيعي. شفاء من كل داء. معصور بارداً. 125 مل.", prix: "1 800 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/8.jpg" },
+  { nom: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "زيت الزيتون البكر الممتاز. معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", prix: "1 900 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/9.jpg" },
+  { nom: "ماء الأرز", region: "الجزائر", matiere: "طبيعي ١٠٠٪", desc: "ماء الأرز الطبيعي. مرطّب ومنعش للبشرة. يقوّي الشعر ويمنحه البريق.", prix: "1 200 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/10.jpg" },
+  { nom: "ماء اللافندر", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "ماء اللافندر الطبيعي. مهدئ ومنوّم طبيعي. للوسادة والبشرة والشعر.", prix: "1 600 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/11.jpg" },
+  { nom: "ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", prix: "1 000 DA", photo: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" },
 ];
 
 document.getElementById("liste").innerHTML = produits.map((p, i) => `
