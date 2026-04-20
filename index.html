@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<style>
+body { font-family: Arial, sans-serif; padding: 15px; background: #FDF8F2; direction: rtl; }
+#liste { display: flex; flex-wrap: wrap; gap: 14px; }
+.produit { border: 1px solid #F0E8DC; border-radius: 16px; overflow: hidden; background: #fff; width: 165px; cursor: pointer; transition: 0.2s; }
+.produit:hover { border-color: #EF9F27; transform: translateY(-2px); }
+.produit img { width: 100%; height: 130px; object-fit: cover; }
+.info { padding: 10px; }
+.nom { font-weight: bold; color: #2C1810; font-size: 12px; margin-bottom: 4px; }
+.region { font-size: 11px; color: #888780; margin-bottom: 4px; }
+.prix { color: #854F0B; font-weight: bold; font-size: 13px; }
+#modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 999; }
+#modal-contenu { background: #FDF8F2; border-radius: 16px; padding: 20px; max-width: 340px; width: 90%; position: relative; direction: rtl; }
+#modal-contenu img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; }
+.m-nom { font-size: 17px; font-weight: bold; color: #2C1810; margin-bottom: 6px; }
+.m-info { font-size: 13px; color: #666; margin: 4px 0; }
+.m-desc { font-size: 13px; color: #444; margin: 8px 0; line-height: 1.6; }
+.m-prix { font-size: 17px; color: #854F0B; font-weight: bold; margin-top: 10px; }
+.m-btn { display: block; width: 100%; padding: 10px 0; margin-top: 14px; background: #2C1810; color: #FAC775; border: none; border-radius: 10px; font-size: 14px; cursor: pointer; text-align: center; text-decoration: none; font-weight: bold; }
+.m-btn:hover { background: #854F0B; }
+.fermer { position: absolute; top: 10px; left: 14px; font-size: 22px; cursor: pointer; color: #2C1810; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div id="liste"></div>
+<div id="modal" style="display:none">
+  <div id="modal-contenu"></div>
+</div>
+
+<script>
+const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfp6xNDTfmJww7bnKDr0SNOrCuUCDucVW-aYLJeilW_SsDS6A/viewform?usp=header";
+
+const produits = [
+  { nom: "ماء ورد جوري طبيعي", region: "الجزائر العاصمة", matiere: "مقطّر يدوياً", desc: "مقطّر يدوياً. مرطّب ومنعش للبشرة يومياً. 200 مل.", prix: "1 500 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
+  { nom: "ماء زهر البرتقال", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "من أزهار البرتقال الطازجة. للطبخ والعناية بالبشرة. 200 مل.", prix: "1 200 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
+  { nom: "ماء اللافندر الجبلي", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "مهدئ ومنوّم طبيعي. للوسادة والبشرة. 200 مل.", prix: "1 600 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
+  { nom: "ماء الياسمين الجزائري", region: "قسنطينة", matiere: "مقطّر يدوياً", desc: "بديل طبيعي راقٍ للعطر الأنثوي. 100 مل.", prix: "2 000 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
+  { nom: "ماء إكليل الجبل", region: "تيزي وزو", matiere: "مقطّر طبيعي", desc: "يقوّي الشعر ويحفّز النمو الطبيعي. 150 مل.", prix: "1 300 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
+  { nom: "ماء الحامض البلدي", region: "عنابة", matiere: "مقطّر طبيعي", desc: "منقّي ومشرّق للبشرة الدهنية. 150 مل.", prix: "1 100 DA", photo: "https://i.postimg.cc/nhvgjfXj/photo-2026-04-19-20-55-15.jpg" },
+  { nom: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", prix: "1 900 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
+  { nom: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر", desc: "علاج طبيعي لتقوية المناعة. بارد العصر. 100 مل.", prix: "1 800 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
+  { nom: "زيت بذور التين الشوكي", region: "ورقلة", matiere: "مستخلص يدوياً", desc: "من أغلى الزيوت الجزائرية. مضاد للشيخوخة. 30 مل.", prix: "4 500 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
+  { nom: "زيت الخروع البلدي", region: "الجزائر", matiere: "طبيعي ١٠٠٪", desc: "لتكثيف الشعر وتقوية الأظافر. 150 مل.", prix: "1 400 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
+  { nom: "زيت نواة الدوم", region: "الجنوب الجزائري", matiere: "طبيعي ١٠٠٪", desc: "مضاد للتجاعيد. مغذٍّ عميق للبشرة. 100 مل.", prix: "2 200 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
+  { nom: "زيت الأرقان الجزائري", region: "تندوف", matiere: "مستخلص يدوياً", desc: "مستخلص يدوياً. للبشرة والشعر والأظافر. 100 مل.", prix: "3 500 DA", photo: "https://i.postimg.cc/7ZvjZZZS/photo-2026-04-19-20-55-11.jpg" },
+  { nom: "عسل السدر من الأوراس", region: "جبال الأوراس", matiere: "نقي ١٠٠٪", desc: "من أجود أنواع العسل الجزائري. نقي ١٠٠٪. 500 غ.", prix: "2 500 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
+  { nom: "عسل الثيمون من القبائل", region: "تيزي وزو", matiere: "نقي ١٠٠٪", desc: "غني بالمضادات الحيوية الطبيعية. 500 غ.", prix: "2 800 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
+  { nom: "عسل الكاليتوس", region: "سكيكدة — عنابة", matiere: "نقي ١٠٠٪", desc: "مفيد للجهاز التنفسي والمناعة. 500 غ.", prix: "2 300 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
+  { nom: "عسل السنط الصحراوي", region: "بسكرة — الأغواط", matiere: "نقي ١٠٠٪", desc: "ذهبي شفاف. خفيف الملمس وحلو الطعم. 250 غ.", prix: "3 200 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
+  { nom: "عسل الزعيتر البري", region: "جبال الأطلس", matiere: "نقي ١٠٠٪", desc: "طعم قوي ورائحة عطرية جبلية نادرة. 250 غ.", prix: "3 000 DA", photo: "https://i.postimg.cc/Z5kX555v/photo-2026-04-19-20-55-07.jpg" },
+];
+
+document.getElementById("liste").innerHTML = produits.map((p, i) => `
+  <div class="produit" onclick="ouvrir(${i})">
+    <img src="${p.photo}" alt="${p.nom}" onerror="this.src='https://via.placeholder.com/165x130?text=صورة'">
+    <div class="info">
+      <div class="nom">${p.nom}</div>
+      <div class="region">📍 ${p.region}</div>
+      <div class="prix">${p.prix}</div>
+    </div>
+  </div>
+`).join("");
+
+function ouvrir(i) {
+  const p = produits[i];
+  document.getElementById("modal-contenu").innerHTML = `
+    <span class="fermer" onclick="fermer()">✕</span>
+    <img src="${p.photo}" alt="${p.nom}">
+    <div class="m-nom">${p.nom}</div>
+    <div class="m-info">📍 المنطقة : ${p.region}</div>
+    <div class="m-info">🌿 المادة : ${p.matiere}</div>
+    <div class="m-desc">${p.desc}</div>
+    <div class="m-prix">💰 ${p.prix}</div>
+    <a class="m-btn" href="${formURL}" target="_blank">🛒 اطلب الآن</a>
+  `;
+  document.getElementById("modal").style.display = "flex";
+}
+
+function fermer() {
+  document.getElementById("modal").style.display = "none";
+}
+</script>
+</body>
+</html>
