@@ -127,34 +127,30 @@
     justify-content: space-between;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   }
+  .search-group {
+    flex: 1;
+  }
   .search-group input {
-    padding: 10px 16px;
+    padding: 12px 18px;
     border-radius: 40px;
     border: 1px solid #F0E0CC;
     font-family: inherit;
     background: #FFFCF8;
-    font-size: 14px;
-    width: 250px;
+    font-size: 15px;
+    width: 100%;
+    max-width: 400px;
   }
   .search-group input:focus {
     outline: none;
     border-color: #EF9F27;
     box-shadow: 0 0 0 2px rgba(239,159,39,0.2);
   }
-  .filter-region select, .sort-box select {
-    padding: 9px 14px;
-    border-radius: 40px;
-    border: 1px solid #F0E0CC;
-    font-family: inherit;
-    background: #FFFCF8;
-    font-size: 13px;
-    cursor: pointer;
-  }
   .stats {
     font-size: 13px;
     background: #F5EDE2;
-    padding: 5px 12px;
+    padding: 8px 15px;
     border-radius: 30px;
+    white-space: nowrap;
   }
 
   /* Grille produits */
@@ -288,76 +284,6 @@
     color: white;
   }
 
-  /* Formulaire d'insertion (flottant) */
-  .fab-add {
-    position: fixed;
-    bottom: 25px;
-    left: 25px;
-    background: #2C4A3A;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    font-weight: bold;
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-    z-index: 200;
-    transition: 0.2s;
-    border: none;
-  }
-  .fab-add:hover {
-    background: #854F0B;
-    transform: scale(1.05);
-  }
-  
-  .admin-panel {
-    position: fixed;
-    bottom: 90px;
-    left: 20px;
-    background: white;
-    width: 300px;
-    border-radius: 28px;
-    padding: 20px;
-    box-shadow: 0 20px 35px rgba(0,0,0,0.2);
-    z-index: 210;
-    display: none;
-    flex-direction: column;
-    gap: 12px;
-    border: 1px solid #F0CF8E;
-  }
-  .admin-panel.open {
-    display: flex;
-  }
-  .admin-panel input, .admin-panel textarea {
-    padding: 10px;
-    border-radius: 60px;
-    border: 1px solid #ddd;
-    font-family: inherit;
-    font-size: 13px;
-  }
-  .admin-panel textarea {
-    border-radius: 20px;
-    resize: vertical;
-  }
-  .admin-panel button {
-    background: #2C4A3A;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 60px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-  .admin-panel button:hover {
-    background: #EF9F27;
-    color: #2C1810;
-  }
-
   footer {
     text-align: center;
     margin-top: 45px;
@@ -372,7 +298,7 @@
     .new-price { font-size: 26px; }
     .product-card { width: 155px; }
     .smart-controls { flex-direction: column; align-items: stretch; }
-    .search-group input { width: 100%; }
+    .stats { text-align: center; }
   }
 </style>
 </head>
@@ -402,29 +328,17 @@
   </div>
 </div>
 
-<!-- شريط البحث فقط (بدون أزرار) + فلتر ومنطقتي -->
+<!-- شريط البحث فقط -->
 <div class="smart-controls">
   <div class="search-group">
     <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج... (اكتب تلقائياً)">
-  </div>
-  <div class="filter-region">
-    <select id="regionFilter">
-      <option value="all">🌍 جميع المناطق</option>
-    </select>
-  </div>
-  <div class="sort-box">
-    <select id="sortSelect">
-      <option value="default">📌 الترتيب الافتراضي</option>
-      <option value="priceAsc">💰 السعر: من الأقل للأعلى</option>
-      <option value="priceDesc">💰 السعر: من الأعلى للأقل</option>
-    </select>
   </div>
   <div class="stats" id="productStats"></div>
 </div>
 
 <div id="productGrid" class="product-grid"></div>
 
-<footer>⭐ آراء عملائنا   🌸 مجموعة عطرية أصلية – أضف منتجاتك بنفسك عبر زر +</footer>
+<footer>⭐ آراء عملائنا   🌸 مجموعة عطرية أصلية – منتجات طبيعية 100%</footer>
 
 <!-- Modal عرض التفاصيل -->
 <div id="modal" class="modal-overlay">
@@ -437,20 +351,6 @@
     <div id="modalPrice" class="modal-price"></div>
     <a id="modalOrderLink" class="modal-btn" href="#" target="_blank">🛒 اطلب الآن</a>
   </div>
-</div>
-
-<!-- زر الإضافة + لوحة إدراج منتج -->
-<button class="fab-add" id="fabAddBtn">+</button>
-<div id="adminPanel" class="admin-panel">
-  <h4 style="text-align:center">➕ إدراج منتج جديد</h4>
-  <input type="text" id="prodName" placeholder="اسم المنتج (مثال: عسل سدر)">
-  <input type="text" id="prodRegion" placeholder="المنطقة (مثال: الأوراس)">
-  <input type="text" id="prodMatiere" placeholder="المادة (مثال: نقي 100%)">
-  <textarea id="prodDesc" rows="2" placeholder="وصف المنتج..."></textarea>
-  <input type="text" id="prodPrice" placeholder="السعر (مثال: 2500 DA)">
-  <input type="text" id="prodImg" placeholder="رابط الصورة (URL)">
-  <button id="saveProductBtn">💾 إضافة المنتج</button>
-  <button id="closeAdminBtn" style="background:#ccc; color:#333;">إلغاء</button>
 </div>
 
 <script>
@@ -484,63 +384,26 @@
       products = [...defaultProducts];
       saveToLocal();
     }
-    updateRegionFilter();
   }
 
   function saveToLocal() {
     localStorage.setItem("assil_products", JSON.stringify(products));
   }
 
-  function addProduct(product) {
-    products.push(product);
-    saveToLocal();
-    updateRegionFilter();
-    renderProductGrid();
-  }
-
-  function updateRegionFilter() {
-    const regions = [...new Set(products.map(p => p.region))];
-    const select = document.getElementById("regionFilter");
-    let html = `<option value="all">🌍 جميع المناطق</option>`;
-    regions.forEach(reg => {
-      html += `<option value="${reg}">📍 ${reg}</option>`;
-    });
-    select.innerHTML = html;
-  }
-
-  // البحث التلقائي (بدون أزرار)
+  // البحث التلقائي
   let currentSearchTerm = "";
 
-  function getFilteredSortedProducts() {
+  function getFilteredProducts() {
     let filtered = [...products];
-    const regionVal = document.getElementById("regionFilter").value;
-    const sortType = document.getElementById("sortSelect").value;
-
     if(currentSearchTerm.trim() !== "") {
       const term = currentSearchTerm.toLowerCase();
       filtered = filtered.filter(p => p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term));
-    }
-    if(regionVal !== "all") {
-      filtered = filtered.filter(p => p.region === regionVal);
-    }
-    if(sortType === "priceAsc") {
-      filtered.sort((a,b) => {
-        let priceA = parseInt(a.price.replace(/\D/g,'')) || 0;
-        let priceB = parseInt(b.price.replace(/\D/g,'')) || 0;
-        return priceA - priceB;
-      });
-    } else if(sortType === "priceDesc") {
-      filtered.sort((a,b) => {
-        let priceA = parseInt(a.price.replace(/\D/g,'')) || 0;
-        let priceB = parseInt(b.price.replace(/\D/g,'')) || 0;
-        return priceB - priceA;
-      });
     }
     return filtered;
   }
 
   function renderProductGrid() {
-    const filtered = getFilteredSortedProducts();
+    const filtered = getFilteredProducts();
     const container = document.getElementById("productGrid");
     const statsSpan = document.getElementById("productStats");
     
@@ -551,7 +414,7 @@
     statsSpan.innerText = message;
 
     if(filtered.length === 0) {
-      container.innerHTML = `<div class="no-results">😔 لا توجد منتجات مطابقة لبحثك<br>✏️ جرب كلمة أخرى أو أضف منتجاً جديداً</div>`;
+      container.innerHTML = `<div class="no-results">😔 لا توجد منتجات مطابقة لبحثك<br>✏️ جرب كلمة أخرى</div>`;
       return;
     }
 
@@ -598,54 +461,6 @@
     if(e.target === document.getElementById("modal")) closeModal(); 
   });
   document.getElementById("searchInput").addEventListener("input", updateSearch);
-  document.getElementById("regionFilter").addEventListener("change", () => renderProductGrid());
-  document.getElementById("sortSelect").addEventListener("change", () => renderProductGrid());
-
-  //插入产品逻辑
-  const fab = document.getElementById("fabAddBtn");
-  const adminPanel = document.getElementById("adminPanel");
-  const closeAdmin = document.getElementById("closeAdminBtn");
-  const saveBtn = document.getElementById("saveProductBtn");
-
-  fab.addEventListener("click", () => {
-    adminPanel.classList.toggle("open");
-  });
-  closeAdmin.addEventListener("click", () => {
-    adminPanel.classList.remove("open");
-  });
-
-  saveBtn.addEventListener("click", () => {
-    const name = document.getElementById("prodName").value.trim();
-    const region = document.getElementById("prodRegion").value.trim();
-    const matiere = document.getElementById("prodMatiere").value.trim();
-    const desc = document.getElementById("prodDesc").value.trim();
-    const price = document.getElementById("prodPrice").value.trim();
-    let img = document.getElementById("prodImg").value.trim();
-
-    if(!name || !region || !price) {
-      alert("❌ الرجاء ملء الحقول الأساسية: الاسم، المنطقة، السعر");
-      return;
-    }
-    if(!img) img = "https://via.placeholder.com/170x140?text=جديد";
-    
-    const newProduct = {
-      name: name,
-      region: region,
-      matiere: matiere || "طبيعي",
-      desc: desc || "منتج طبيعي أصيل عالي الجودة",
-      price: price,
-      img: img
-    };
-    addProduct(newProduct);
-    document.getElementById("prodName").value = "";
-    document.getElementById("prodRegion").value = "";
-    document.getElementById("prodMatiere").value = "";
-    document.getElementById("prodDesc").value = "";
-    document.getElementById("prodPrice").value = "";
-    document.getElementById("prodImg").value = "";
-    adminPanel.classList.remove("open");
-    alert("✅ تم إضافة المنتج بنجاح!");
-  });
 
   // بدء التشغيل
   loadData();
