@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>صندوق كنوز أصيل - إدارة وبيع ذكي</title>
+<title>صندوق كنوز أصيل - منتجات طبيعية فاخرة</title>
 <style>
   * {
     margin: 0;
@@ -37,6 +37,7 @@
     bottom: -20px;
     left: -20px;
     opacity: 0.1;
+    pointer-events: none;
   }
   .offer-badge {
     background: #D4AF37;
@@ -92,7 +93,7 @@
     padding: 4px 12px;
     font-weight: bold;
   }
-  .btn-order {
+  .btn-order-offer {
     background: #FAD974;
     border: none;
     padding: 10px 30px;
@@ -105,10 +106,15 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
+    transition: 0.2s;
   }
-  .btn-order:hover { background: #FFE19C; transform: scale(1.02); }
+  .btn-order-offer:hover {
+    background: #FFE19C;
+    transform: scale(1.02);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+  }
 
-  /* Contrôles intelligence (filtres + tri + recherche) */
+  /* Contrôles (recherche seulement) */
   .smart-controls {
     background: white;
     border-radius: 28px;
@@ -121,43 +127,19 @@
     justify-content: space-between;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   }
-  .search-group {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
   .search-group input {
-    padding: 10px 14px;
+    padding: 10px 16px;
     border-radius: 40px;
     border: 1px solid #F0E0CC;
     font-family: inherit;
     background: #FFFCF8;
-    font-size: 13px;
-    width: 200px;
+    font-size: 14px;
+    width: 250px;
   }
-  .search-group button {
-    background: #2C4A3A;
-    color: white;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 40px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
-    transition: 0.2s;
-  }
-  .search-group button:hover {
-    background: #EF9F27;
-    color: #2C1810;
-    transform: scale(1.02);
-  }
-  .reset-btn {
-    background: #A67B5B !important;
-  }
-  .reset-btn:hover {
-    background: #854F0B !important;
-    color: white !important;
+  .search-group input:focus {
+    outline: none;
+    border-color: #EF9F27;
+    box-shadow: 0 0 0 2px rgba(239,159,39,0.2);
   }
   .filter-region select, .sort-box select {
     padding: 9px 14px;
@@ -166,6 +148,7 @@
     font-family: inherit;
     background: #FFFCF8;
     font-size: 13px;
+    cursor: pointer;
   }
   .stats {
     font-size: 13px;
@@ -196,6 +179,7 @@
   .product-card:hover {
     transform: translateY(-5px);
     border-color: #EF9F27;
+    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
   }
   .product-img {
     width: 100%;
@@ -259,6 +243,7 @@
     padding: 22px;
     position: relative;
     text-align: center;
+    border: 1px solid #F7DBA2;
   }
   .close-modal {
     position: absolute;
@@ -266,6 +251,8 @@
     top: 12px;
     font-size: 26px;
     cursor: pointer;
+    color: #2C1810;
+    font-weight: bold;
   }
   .modal-img {
     width: 100%;
@@ -274,8 +261,17 @@
     border-radius: 24px;
     margin: 10px 0;
   }
-  .modal-name { font-size: 22px; font-weight: 800; }
-  .modal-price { font-size: 22px; font-weight: bold; color: #A6571A; margin-top: 8px; }
+  .modal-name {
+    font-size: 22px;
+    font-weight: 800;
+    color: #2C1810;
+  }
+  .modal-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #A6571A;
+    margin-top: 8px;
+  }
   .modal-btn {
     display: block;
     background: #2C1810;
@@ -284,9 +280,15 @@
     border-radius: 60px;
     text-decoration: none;
     margin-top: 18px;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+  .modal-btn:hover {
+    background: #854F0B;
+    color: white;
   }
 
-  /* Formulaire d'insertion (flottant intelligent) */
+  /* Formulaire d'insertion (flottant) */
   .fab-add {
     position: fixed;
     bottom: 25px;
@@ -307,7 +309,10 @@
     transition: 0.2s;
     border: none;
   }
-  .fab-add:hover { background: #854F0B; transform: scale(1.05); }
+  .fab-add:hover {
+    background: #854F0B;
+    transform: scale(1.05);
+  }
   
   .admin-panel {
     position: fixed;
@@ -324,12 +329,19 @@
     gap: 12px;
     border: 1px solid #F0CF8E;
   }
-  .admin-panel.open { display: flex; }
-  .admin-panel input, .admin-panel textarea, .admin-panel select {
+  .admin-panel.open {
+    display: flex;
+  }
+  .admin-panel input, .admin-panel textarea {
     padding: 10px;
     border-radius: 60px;
     border: 1px solid #ddd;
     font-family: inherit;
+    font-size: 13px;
+  }
+  .admin-panel textarea {
+    border-radius: 20px;
+    resize: vertical;
   }
   .admin-panel button {
     background: #2C4A3A;
@@ -339,8 +351,12 @@
     border-radius: 60px;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.2s;
   }
-  .admin-panel button:hover { background: #EF9F27; color: #2C1810; }
+  .admin-panel button:hover {
+    background: #EF9F27;
+    color: #2C1810;
+  }
 
   footer {
     text-align: center;
@@ -348,24 +364,29 @@
     font-size: 12px;
     color: #C6AD89;
     padding: 15px;
+    border-top: 1px solid #EFE3D5;
   }
+
   @media (max-width: 550px) {
     .offer-title { font-size: 22px; }
+    .new-price { font-size: 26px; }
     .product-card { width: 155px; }
     .smart-controls { flex-direction: column; align-items: stretch; }
-    .search-group { justify-content: stretch; }
-    .search-group input { flex: 1; }
+    .search-group input { width: 100%; }
   }
 </style>
 </head>
 <body>
 
+<!-- بطاقة العرض المحدود الرئيسية -->
 <div class="offer-banner">
   <div class="offer-badge">🎁 عرض محدود</div>
-  <div class="offer-title">صندوق كنوز أصيل - علبة هدايا فاخرة</div>
+  <div class="offer-title">
+    صندوق كنوز أصيل - علبة هدايا فاخرة
+  </div>
   <div class="offer-products">
     <div class="offer-item">🍯 عسل السدر</div>
-    <div class="offer-item">🫒 زيت الزيتون</div>
+    <div class="offer-item">🫒 زيت الزيتون البكر</div>
     <div class="offer-item">🌹 ماء ورد</div>
     <div class="offer-item">⚫ زيت الحبة السوداء</div>
   </div>
@@ -374,15 +395,17 @@
     <span class="new-price">7 500 DA</span>
     <span class="discount">وفّر 2 000 DA</span>
   </div>
-  <a href="https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform" target="_blank" class="btn-order">📦 اطلب الآن ←</a>
+  <div>
+    <a href="https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform" target="_blank" class="btn-order-offer">
+      📦 اطلب الآن ←
+    </a>
+  </div>
 </div>
 
-<!-- Barre intelligente : recherche avec bouton, filtre région, tri -->
+<!-- شريط البحث فقط (بدون أزرار) + فلتر ومنطقتي -->
 <div class="smart-controls">
   <div class="search-group">
-    <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج...">
-    <button id="searchBtn">🔎 بحث</button>
-    <button id="resetSearchBtn" class="reset-btn">🗑️ إعادة تعيين</button>
+    <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج... (اكتب تلقائياً)">
   </div>
   <div class="filter-region">
     <select id="regionFilter">
@@ -407,16 +430,16 @@
 <div id="modal" class="modal-overlay">
   <div class="modal-container">
     <span class="close-modal" id="closeModalBtn">✕</span>
-    <img id="modalImg" class="modal-img" src="" alt="صورة">
+    <img id="modalImg" class="modal-img" src="" alt="صورة المنتج">
     <div id="modalName" class="modal-name"></div>
-    <div id="modalRegion" style="margin:5px 0"></div>
-    <div id="modalDesc" style="margin:10px 0"></div>
+    <div id="modalRegion" style="margin:5px 0; color:#5E4B34;"></div>
+    <div id="modalDesc" style="margin:10px 0; font-size:13px; line-height:1.5; color:#3A2A1C;"></div>
     <div id="modalPrice" class="modal-price"></div>
     <a id="modalOrderLink" class="modal-btn" href="#" target="_blank">🛒 اطلب الآن</a>
   </div>
 </div>
 
-<!-- زر الإضافة الذكي + لوحة إدراج منتج -->
+<!-- زر الإضافة + لوحة إدراج منتج -->
 <button class="fab-add" id="fabAddBtn">+</button>
 <div id="adminPanel" class="admin-panel">
   <h4 style="text-align:center">➕ إدراج منتج جديد</h4>
@@ -431,26 +454,28 @@
 </div>
 
 <script>
-  // --------------------- BASE DONNÉES INTELLIGENTE (localStorage) ------------------
+  // رابط الطلب
+  const ORDER_LINK = "https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform";
+
+  // قائمة المنتجات الافتراضية
   let products = [];
 
-  // Liste initiale (12 produits)
   const defaultProducts = [
-    { name: "عسل طبيعي", region: "الجزائر", matiere: "نقي 100%", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن.", price: "2000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/1.jpg" },
-    { name: "عسل الكاليبتوس", region: "سكيكدة", matiere: "نقي 100%", desc: "مفيد للجهاز التنفسي.", price: "2300 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/2.jpg" },
-    { name: "عسل الليمون", region: "عنابة", matiere: "نقي", desc: "طعم منعش وفوائد صحية.", price: "2100 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/3.jpg" },
-    { name: "عسل السدر", region: "الأوراس", matiere: "ملكي", desc: "أجود الأنواع الجزائرية.", price: "2500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/4.jpg" },
-    { name: "زيت الأرجان", region: "تندوف", matiere: "يدوي", desc: "للبشرة والشعر.", price: "3500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/5.jpg" },
-    { name: "زيت الخروع", region: "الجزائر", matiere: "طبيعي", desc: "تكثيف الشعر.", price: "1400 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/6.jpg" },
-    { name: "زيت التين الشوكي", region: "ورقلة", matiere: "نادر", desc: "مضاد للشيخوخة.", price: "4500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/7.jpg" },
-    { name: "زيت الحبة السوداء", region: "الجزائر", matiere: "معصور بارد", desc: "شفاء من كل داء.", price: "1800 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/8.jpg" },
-    { name: "زيت الزيتون البكر", region: "القبائل", matiere: "بكر ممتاز", desc: "غني بالأوميغا.", price: "1900 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/9.jpg" },
-    { name: "ماء الأرز", region: "الجزائر", matiere: "طبيعي", desc: "مرطب للبشرة.", price: "1200 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/10.jpg" },
-    { name: "ماء اللافندر", region: "الأوراس", matiere: "مقطر", desc: "مهدئ ومنوم.", price: "1600 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/11.jpg" },
-    { name: "ماء الزهر", region: "البليدة", matiere: "طازج", desc: "للبشرة والطبخ.", price: "1000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" }
+    { name: "عسل طبيعي", region: "الجزائر", matiere: "نقي 100%", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن والفيتامينات. 500 غ.", price: "2000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/1.jpg" },
+    { name: "عسل الكاليبتوس", region: "سكيكدة — عنابة", matiere: "نقي 100%", desc: "عسل الكاليبتوس الطبيعي. مفيد للجهاز التنفسي والمناعة. 1 كغ.", price: "2300 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/2.jpg" },
+    { name: "عسل الليمون", region: "عنابة", matiere: "نقي 100%", desc: "عسل الليمون الطبيعي. طعم منعش وفوائد صحية رائعة. 500 غ.", price: "2100 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/3.jpg" },
+    { name: "عسل السدر", region: "جبال الأوراس", matiere: "نقي 100%", desc: "من أجود أنواع العسل الجزائري. نقي 100% بدون إضافات. 1 كغ.", price: "2500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/4.jpg" },
+    { name: "زيت الأرجان", region: "تندوف", matiere: "مستخلص يدوياً", desc: "زيت الأرجان الطبيعي. مستخلص يدوياً للبشرة والشعر والأظافر. 30 مل.", price: "3500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/5.jpg" },
+    { name: "زيت الخروع", region: "الجزائر", matiere: "طبيعي 100%", desc: "زيت الخروع الطبيعي. لتكثيف الشعر وتقوية الأظافر وترطيب البشرة.", price: "1400 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/6.jpg" },
+    { name: "زيت التين الشوكي", region: "ورقلة", matiere: "نباتي وعذري", desc: "زيت التين الشوكي النادر. مضاد للشيخوخة. بدون ملونات ولا مواد حافظة. 30 مل.", price: "4500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/7.jpg" },
+    { name: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر 100%", desc: "زيت الحبة السوداء الطبيعي. شفاء من كل داء. معصور بارداً. 125 مل.", price: "1800 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/8.jpg" },
+    { name: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "زيت الزيتون البكر الممتاز. معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", price: "1900 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/9.jpg" },
+    { name: "ماء الأرز", region: "الجزائر", matiere: "طبيعي 100%", desc: "ماء الأرز الطبيعي. مرطّب ومنعش للبشرة. يقوّي الشعر ويمنحه البريق.", price: "1200 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/10.jpg" },
+    { name: "ماء اللافندر", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "ماء اللافندر الطبيعي. مهدئ ومنوّم طبيعي. للوسادة والبشرة والشعر.", price: "1600 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/11.jpg" },
+    { name: "ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", price: "1000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" }
   ];
 
-  // تحميل البيانات من localStorage أو البدء بالافتراضية
+  // تحميل البيانات
   function loadData() {
     const stored = localStorage.getItem("assil_products");
     if(stored) {
@@ -466,7 +491,6 @@
     localStorage.setItem("assil_products", JSON.stringify(products));
   }
 
-  // إضافة منتج جديد
   function addProduct(product) {
     products.push(product);
     saveToLocal();
@@ -474,7 +498,6 @@
     renderProductGrid();
   }
 
-  // تحديث قائمة المناطق للفلتر
   function updateRegionFilter() {
     const regions = [...new Set(products.map(p => p.region))];
     const select = document.getElementById("regionFilter");
@@ -485,25 +508,21 @@
     select.innerHTML = html;
   }
 
-  // متغير لتخزين مصطلح البحث الحالي
+  // البحث التلقائي (بدون أزرار)
   let currentSearchTerm = "";
 
-  // منطق الفلتر + البحث + الترتيب
   function getFilteredSortedProducts() {
     let filtered = [...products];
     const regionVal = document.getElementById("regionFilter").value;
     const sortType = document.getElementById("sortSelect").value;
 
-    // بحث (باستخدام currentSearchTerm)
     if(currentSearchTerm.trim() !== "") {
       const term = currentSearchTerm.toLowerCase();
       filtered = filtered.filter(p => p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term));
     }
-    // فلتر المنطقة
     if(regionVal !== "all") {
       filtered = filtered.filter(p => p.region === regionVal);
     }
-    // ترتيب ذكي
     if(sortType === "priceAsc") {
       filtered.sort((a,b) => {
         let priceA = parseInt(a.price.replace(/\D/g,'')) || 0;
@@ -520,7 +539,6 @@
     return filtered;
   }
 
-  // عرض المنتجات في الشبكة
   function renderProductGrid() {
     const filtered = getFilteredSortedProducts();
     const container = document.getElementById("productGrid");
@@ -538,7 +556,6 @@
     }
 
     container.innerHTML = filtered.map((p, idx) => {
-      // Trouver l'index réel dans products
       const originalIndex = products.findIndex(prod => prod.name === p.name && prod.price === p.price && prod.region === p.region);
       return `
       <div class="product-card" onclick="openProductModal(${originalIndex})">
@@ -552,17 +569,9 @@
     `}).join('');
   }
 
-  // Fonction de recherche déclenchée par le bouton
-  function performSearch() {
-    const searchInput = document.getElementById("searchInput");
-    currentSearchTerm = searchInput.value.trim();
-    renderProductGrid();
-  }
-
-  // Réinitialiser la recherche
-  function resetSearch() {
-    document.getElementById("searchInput").value = "";
-    currentSearchTerm = "";
+  // بحث تلقائي عند الكتابة
+  function updateSearch() {
+    currentSearchTerm = document.getElementById("searchInput").value;
     renderProductGrid();
   }
 
@@ -575,28 +584,24 @@
     document.getElementById("modalRegion").innerHTML = `📍 ${prod.region} | 🌿 ${prod.matiere || "طبيعي"}`;
     document.getElementById("modalDesc").innerText = prod.desc;
     document.getElementById("modalPrice").innerHTML = `💰 ${prod.price}`;
-    const orderBtn = document.getElementById("modalOrderLink");
-    orderBtn.href = "https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform";
+    document.getElementById("modalOrderLink").href = ORDER_LINK;
     document.getElementById("modal").classList.add("active");
   };
 
   function closeModal() {
     document.getElementById("modal").classList.remove("active");
   }
-  document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-  document.getElementById("modal").addEventListener("click", (e) => { if(e.target === document.getElementById("modal")) closeModal(); });
 
-  // Écouteurs
-  document.getElementById("searchBtn").addEventListener("click", performSearch);
-  document.getElementById("resetSearchBtn").addEventListener("click", resetSearch);
+  // événements
+  document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+  document.getElementById("modal").addEventListener("click", (e) => { 
+    if(e.target === document.getElementById("modal")) closeModal(); 
+  });
+  document.getElementById("searchInput").addEventListener("input", updateSearch);
   document.getElementById("regionFilter").addEventListener("change", () => renderProductGrid());
   document.getElementById("sortSelect").addEventListener("change", () => renderProductGrid());
-  // Recherche aussi en appuyant sur Entrée
-  document.getElementById("searchInput").addEventListener("keypress", (e) => {
-    if(e.key === "Enter") performSearch();
-  });
 
-  // --------------------- PARTIE INSERTION ------------------
+  //插入产品逻辑
   const fab = document.getElementById("fabAddBtn");
   const adminPanel = document.getElementById("adminPanel");
   const closeAdmin = document.getElementById("closeAdminBtn");
@@ -632,7 +637,6 @@
       img: img
     };
     addProduct(newProduct);
-    // تفريغ الحقول
     document.getElementById("prodName").value = "";
     document.getElementById("prodRegion").value = "";
     document.getElementById("prodMatiere").value = "";
@@ -643,7 +647,7 @@
     alert("✅ تم إضافة المنتج بنجاح!");
   });
 
-  // بدء التطبيق
+  // بدء التشغيل
   loadData();
   renderProductGrid();
 </script>
