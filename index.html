@@ -13,7 +13,7 @@
 
   body {
     font-family: 'Segoe UI', 'Tahoma', 'Noto Sans Arabic', sans-serif;
-    background: #FEF7E8;
+    background: transparent;
     color: #2C1810;
     padding: 20px;
     direction: rtl;
@@ -114,9 +114,9 @@
     box-shadow: 0 5px 12px rgba(0,0,0,0.2);
   }
 
-  /* Contrôles (recherche seulement) */
+  /* Contrôles */
   .smart-controls {
-    background: white;
+    background: rgba(255,255,255,0.85);
     border-radius: 28px;
     padding: 15px 20px;
     margin: 20px 0;
@@ -207,11 +207,11 @@
     padding: 50px;
     font-size: 18px;
     color: #A48C70;
-    background: #FFF9EF;
+    background: rgba(255,249,239,0.9);
     border-radius: 28px;
   }
 
-  /* Modal affichage produit */
+  /* Modal */
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -328,7 +328,7 @@
   </div>
 </div>
 
-<!-- شريط البحث فقط -->
+<!-- شريط البحث -->
 <div class="smart-controls">
   <div class="search-group">
     <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج... (اكتب تلقائياً)">
@@ -340,7 +340,7 @@
 
 <footer>⭐ آراء عملائنا   🌸 مجموعة عطرية أصلية – منتجات طبيعية 100%</footer>
 
-<!-- Modal عرض التفاصيل -->
+<!-- Modal -->
 <div id="modal" class="modal-overlay">
   <div class="modal-container">
     <span class="close-modal" id="closeModalBtn">✕</span>
@@ -354,10 +354,8 @@
 </div>
 
 <script>
-  // رابط الطلب
   const ORDER_LINK = "https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform";
 
-  // قائمة المنتجات الافتراضية
   let products = [];
 
   const defaultProducts = [
@@ -375,22 +373,10 @@
     { name: "ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", price: "1000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" }
   ];
 
-  // تحميل البيانات
   function loadData() {
-    const stored = localStorage.getItem("assil_products");
-    if(stored) {
-      products = JSON.parse(stored);
-    } else {
-      products = [...defaultProducts];
-      saveToLocal();
-    }
+    products = [...defaultProducts];
   }
 
-  function saveToLocal() {
-    localStorage.setItem("assil_products", JSON.stringify(products));
-  }
-
-  // البحث التلقائي
   let currentSearchTerm = "";
 
   function getFilteredProducts() {
@@ -432,13 +418,11 @@
     `}).join('');
   }
 
-  // بحث تلقائي عند الكتابة
   function updateSearch() {
     currentSearchTerm = document.getElementById("searchInput").value;
     renderProductGrid();
   }
 
-  // Modal
   window.openProductModal = function(originalIndex) {
     const prod = products[originalIndex];
     if(!prod) return;
@@ -455,14 +439,12 @@
     document.getElementById("modal").classList.remove("active");
   }
 
-  // événements
   document.getElementById("closeModalBtn").addEventListener("click", closeModal);
   document.getElementById("modal").addEventListener("click", (e) => { 
     if(e.target === document.getElementById("modal")) closeModal(); 
   });
   document.getElementById("searchInput").addEventListener("input", updateSearch);
 
-  // بدء التشغيل
   loadData();
   renderProductGrid();
 </script>
