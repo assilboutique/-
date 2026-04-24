@@ -11,68 +11,82 @@
     font-family: 'Segoe UI', 'Tahoma', 'Noto Sans Arabic', sans-serif;
     background: transparent;
     color: #2C1810;
-    padding: 20px;
     direction: rtl;
   }
 
+  /* ───── STICKY WRAPPER ───── */
+  .sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    background: #f5ede2; /* matches page bg */
+    padding: 12px 20px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  }
+
+  /* ───── OFFER BANNER ───── */
   .offer-banner {
     background: linear-gradient(135deg, #1E3A2F 0%, #2C4A3A 100%);
-    border-radius: 32px;
-    margin-bottom: 30px;
-    padding: 20px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    border-radius: 24px;
+    padding: 14px 18px;
     position: relative;
     overflow: hidden;
     border: 1px solid #F0CF8E;
   }
   .offer-banner::before {
     content: "🎁";
-    font-size: 140px;
+    font-size: 110px;
     position: absolute;
     bottom: -20px;
-    left: -20px;
-    opacity: 0.1;
+    left: -15px;
+    opacity: 0.10;
     pointer-events: none;
   }
   .offer-badge {
     background: #D4AF37;
     display: inline-block;
-    padding: 5px 15px;
+    padding: 3px 12px;
     border-radius: 50px;
     font-weight: bold;
     color: #1E3A2F;
-    font-size: 14px;
+    font-size: 13px;
   }
   .offer-title {
-    font-size: 28px;
+    font-size: 22px;
     font-weight: 800;
     color: #FAD974;
-    margin: 10px 0;
+    margin: 6px 0 4px;
   }
   .offer-products {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    margin: 15px 0;
+    gap: 8px;
+    margin: 8px 0;
   }
   .offer-item {
     background: #FFF9EF;
     border-radius: 60px;
-    padding: 6px 18px;
-    font-size: 14px;
+    padding: 4px 14px;
+    font-size: 13px;
     font-weight: bold;
     color: #854F0B;
+  }
+  .offer-bottom {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 6px;
   }
   .price-block {
     background: #2C1810;
     display: inline-block;
-    padding: 8px 20px;
+    padding: 6px 18px;
     border-radius: 60px;
-    margin: 10px 0;
     direction: ltr;
   }
   .new-price {
-    font-size: 32px;
+    font-size: 26px;
     font-weight: bold;
     color: #FAD974;
     direction: ltr;
@@ -81,18 +95,17 @@
   .btn-order-offer {
     background: #FAD974;
     border: none;
-    padding: 10px 30px;
+    padding: 9px 24px;
     border-radius: 60px;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
     color: #1E3A2F;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     text-decoration: none;
     transition: 0.2s;
-    margin-top: 10px;
   }
   .btn-order-offer:hover {
     background: #FFE19C;
@@ -100,21 +113,20 @@
     box-shadow: 0 5px 12px rgba(0,0,0,0.2);
   }
 
+  /* ───── STICKY SEARCH BAR ───── */
   .smart-controls {
-    background: rgba(255,255,255,0.85);
-    border-radius: 28px;
-    padding: 15px 20px;
-    margin: 20px 0;
+    background: rgba(255,255,255,0.92);
+    border-radius: 0 0 20px 20px;
+    padding: 10px 0 12px;
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
   }
-  .search-group { flex: 1; min-width: 200px; }
+  .search-group { flex: 1; min-width: 180px; }
   .search-group input {
-    padding: 12px 18px;
+    padding: 11px 18px;
     border-radius: 40px;
     border: 1px solid #F0E0CC;
     font-family: inherit;
@@ -130,9 +142,14 @@
   .stats {
     font-size: 13px;
     background: #F5EDE2;
-    padding: 8px 15px;
+    padding: 8px 14px;
     border-radius: 30px;
     white-space: nowrap;
+  }
+
+  /* ───── PRODUCT GRID ───── */
+  .page-body {
+    padding: 16px 20px 100px;
   }
 
   .product-grid {
@@ -182,6 +199,9 @@
     border-radius: 28px;
   }
 
+
+
+  /* ───── MODAL ───── */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0;
@@ -245,64 +265,73 @@
 
   footer {
     text-align: center;
-    margin-top: 45px;
+    margin-top: 30px;
     font-size: 12px;
     color: #C6AD89;
     padding: 15px;
     border-top: 1px solid #EFE3D5;
   }
 
+  /* ───── RESPONSIVE ───── */
   @media (max-width: 600px) {
-    body { padding: 12px; }
-    .offer-banner { padding: 16px; border-radius: 20px; }
-    .offer-title { font-size: 20px; }
-    .new-price { font-size: 26px; }
-    .offer-item { font-size: 12px; padding: 5px 12px; }
-    .btn-order-offer { font-size: 15px; padding: 9px 20px; }
+    .sticky-top { padding: 10px 12px 0; }
+    .offer-banner { padding: 12px 14px; border-radius: 18px; }
+    .offer-title { font-size: 17px; }
+    .new-price { font-size: 22px; }
+    .offer-item { font-size: 11px; padding: 4px 10px; }
+    .btn-order-offer { font-size: 14px; padding: 8px 18px; }
+    .page-body { padding: 12px 12px 100px; }
     .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .product-img { height: 120px; }
     .smart-controls { flex-direction: column; align-items: stretch; }
     .stats { text-align: center; }
-  }
-
-  @media (max-width: 380px) {
-    .offer-title { font-size: 17px; }
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .fab { font-size: 15px; padding: 12px 28px; bottom: 18px; }
   }
 </style>
 </head>
 <body>
 
-<div class="offer-banner">
-  <div class="offer-badge">🎁 عرض محدود</div>
-  <div class="offer-title">صندوق كنوز أصيل - علبة هدايا فاخرة</div>
-  <div class="offer-products">
-    <div class="offer-item">🍯 عسل السدر</div>
-    <div class="offer-item">🫒 زيت الزيتون البكر</div>
-    <div class="offer-item">🌹 ماء ورد</div>
-    <div class="offer-item">⚫ زيت الحبة السوداء</div>
+<!-- ═══ STICKY TOP (banner + search) ═══ -->
+<div class="sticky-top">
+
+  <div class="offer-banner">
+    <div class="offer-badge">🎁 عرض محدود</div>
+    <div class="offer-title">صندوق كنوز أصيل - علبة هدايا فاخرة</div>
+    <div class="offer-products">
+      <div class="offer-item">🍯 عسل السدر</div>
+      <div class="offer-item">🫒 زيت الزيتون البكر</div>
+      <div class="offer-item">🌹 ماء ورد</div>
+      <div class="offer-item">⚫ زيت الحبة السوداء</div>
+    </div>
+    <div class="offer-bottom">
+      <div class="price-block">
+        <span class="new-price">7 500 DA</span>
+      </div>
+      <a href="https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform" target="_blank" class="btn-order-offer">
+        📦 اطلب الآن ←
+      </a>
+    </div>
   </div>
-  <div class="price-block">
-    <span class="new-price">7 500 DA</span>
+
+  <div class="smart-controls">
+    <div class="search-group">
+      <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج... (اكتب تلقائياً)">
+    </div>
+    <div class="stats" id="productStats"></div>
   </div>
-  <div>
-    <a href="https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform" target="_blank" class="btn-order-offer">
-      📦 اطلب الآن ←
-    </a>
-  </div>
+
+</div>
+<!-- ═══ END STICKY TOP ═══ -->
+
+<!-- ═══ SCROLLABLE CONTENT ═══ -->
+<div class="page-body">
+  <div id="productGrid" class="product-grid"></div>
+  <footer>⭐ آراء عملائنا   🌸 مجموعة عطرية أصلية – منتجات طبيعية 100%</footer>
 </div>
 
-<div class="smart-controls">
-  <div class="search-group">
-    <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج... (اكتب تلقائياً)">
-  </div>
-  <div class="stats" id="productStats"></div>
-</div>
 
-<div id="productGrid" class="product-grid"></div>
 
-<footer>⭐ آراء عملائنا   🌸 مجموعة عطرية أصلية – منتجات طبيعية 100%</footer>
-
+<!-- ═══ MODAL ═══ -->
 <div id="modal" class="modal-overlay">
   <div class="modal-container">
     <span class="close-modal" id="closeModalBtn">✕</span>
