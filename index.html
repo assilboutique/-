@@ -11,7 +11,6 @@
     box-sizing: border-box;
   }
 
-  /* Force le body à prendre toute la largeur sur Google Sites */
   html, body {
     width: 100%;
     max-width: 100%;
@@ -26,7 +25,6 @@
     min-height: 100vh;
   }
 
-  /* Conteneur principal qui va bien s'afficher dans Google Sites */
   .main-wrapper {
     width: 100%;
     max-width: 100%;
@@ -34,7 +32,6 @@
     background: transparent;
   }
 
-  /* Version sticky qui fonctionne sur Google Sites */
   .header-sticky {
     position: -webkit-sticky;
     position: sticky;
@@ -44,7 +41,6 @@
     padding: 10px 15px 0;
   }
 
-  /* Section produits */
   .products-wrapper {
     padding: 0 15px 20px;
     width: 100%;
@@ -173,7 +169,6 @@
     width: 100%;
   }
 
-  /* Sur tablette */
   @media (min-width: 600px) {
     .product-grid {
       grid-template-columns: repeat(3, 1fr);
@@ -187,7 +182,6 @@
     }
   }
 
-  /* Sur PC */
   @media (min-width: 900px) {
     .product-grid {
       grid-template-columns: repeat(4, 1fr);
@@ -250,74 +244,113 @@
     border-radius: 16px;
   }
 
-  /* MODAL */
+  /* MODAL - CORRIGÉ POUR RESTER CENTRÉ PEU IMPORTE LE SCROLL */
   .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.8);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 9999;
     visibility: hidden;
     opacity: 0;
-    transition: 0.2s;
-    padding: 15px;
+    transition: visibility 0.2s, opacity 0.2s;
   }
+  
   .modal-overlay.active {
     visibility: visible;
     opacity: 1;
   }
+  
   .modal-container {
+    position: relative;
     background: white;
     max-width: 320px;
     width: 90%;
-    border-radius: 24px;
-    padding: 18px;
-    position: relative;
+    border-radius: 28px;
+    padding: 20px;
     text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    transform: scale(0.95);
+    transition: transform 0.2s ease-out;
   }
+  
+  .modal-overlay.active .modal-container {
+    transform: scale(1);
+  }
+  
   .close-modal {
     position: absolute;
-    left: 14px;
-    top: 8px;
-    font-size: 22px;
+    left: 16px;
+    top: 12px;
+    font-size: 26px;
     cursor: pointer;
-    color: #2C1810;
+    color: #A48C70;
     font-weight: bold;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
   }
+  
+  .close-modal:hover {
+    background: rgba(0,0,0,0.05);
+    color: #2C1810;
+  }
+  
   .modal-img {
     width: 100%;
-    height: 150px;
+    height: 160px;
     object-fit: cover;
-    border-radius: 16px;
-    margin: 8px 0;
+    border-radius: 20px;
+    margin: 8px 0 12px;
     background: #F5EDE2;
   }
+  
   .modal-name {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 800;
     color: #2C1810;
-  }
-  .modal-price {
-    font-size: 18px;
-    font-weight: bold;
-    color: #A6571A;
     margin-top: 6px;
   }
+  
+  .modal-price {
+    font-size: 22px;
+    font-weight: bold;
+    color: #D4AF37;
+    background: #2C1810;
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 40px;
+    margin: 12px 0;
+    direction: ltr;
+  }
+  
   .modal-btn {
     display: block;
-    background: #2C1810;
+    background: #1E3A2F;
     color: #FAD974;
-    padding: 10px;
-    border-radius: 50px;
+    padding: 12px;
+    border-radius: 60px;
     text-decoration: none;
-    margin-top: 14px;
+    margin-top: 16px;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 15px;
+    transition: all 0.2s;
+  }
+  
+  .modal-btn:active {
+    transform: scale(0.97);
+    background: #0F2B21;
   }
 
   footer {
@@ -329,10 +362,14 @@
     border-top: 1px solid rgba(239, 227, 213, 0.5);
   }
 
-  /* Pour que tout soit bien centré dans Google Sites */
   .main-wrapper {
     max-width: 1200px;
     margin: 0 auto;
+  }
+
+  /* Empêcher le scroll du body quand la modale est ouverte */
+  body.modal-open {
+    overflow: hidden;
   }
 </style>
 </head>
@@ -374,15 +411,16 @@
 
 </div>
 
+<!-- MODALE CORRIGÉE - S'AFFICHE PARFAITEMENT AU CENTRE -->
 <div id="modal" class="modal-overlay">
   <div class="modal-container">
     <span class="close-modal" id="closeModalBtn">✕</span>
     <img id="modalImg" class="modal-img" src="" alt="صورة المنتج">
     <div id="modalName" class="modal-name"></div>
-    <div id="modalRegion" style="margin:4px 0; color:#5E4B34; font-size:11px;"></div>
-    <div id="modalDesc" style="margin:8px 0; font-size:12px; line-height:1.4; color:#3A2A1C;"></div>
-    <div id="modalPrice" class="modal-price"></div>
-    <a id="modalOrderLink" class="modal-btn" href="#" target="_blank" rel="noopener">🛒 اطلب الآن</a>
+    <div id="modalRegion" style="margin:6px 0; color:#5E4B34; font-size:12px; background:#F9F4EC; display:inline-block; padding:3px 12px; border-radius:50px;"></div>
+    <div id="modalDesc" style="margin:10px 0; font-size:13px; line-height:1.5; color:#3A2A1C; padding:0 6px;"></div>
+    <div id="modalPrice" class="modal-price">💰 0 DA</div>
+    <a id="modalOrderLink" class="modal-btn" href="#" target="_blank" rel="noopener">🛒 طلب المنتج الآن</a>
   </div>
 </div>
 
@@ -424,9 +462,10 @@
     }
     
     container.innerHTML = filtered.map((p, idx) => {
-      const originalIdx = products.findIndex(prod => prod.name === p.name && prod.price === p.price);
+      // Trouver l'index original dans la liste complète des produits
+      const originalIdx = products.findIndex(prod => prod.name === p.name && prod.price === p.price && prod.region === p.region);
       return `
-        <div class="product-card" onclick="openProductModal(${originalIdx})">
+        <div class="product-card" data-product-index="${originalIdx}">
           <img class="product-img" src="${p.img}" alt="${p.name}" onerror="this.src='https://placehold.co/400x300/F5EDE2/854F0B?text=${encodeURIComponent(p.name.split(' ')[1] || p.name)}'">
           <div class="product-info">
             <div class="product-name">${p.name}</div>
@@ -436,34 +475,72 @@
         </div>
       `;
     }).join('');
+    
+    // Réattacher les événements après le rendu
+    document.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        // Éviter la propagation si on clique sur un enfant
+        if(e.target.closest('.product-card')) {
+          const idx = parseInt(card.getAttribute('data-product-index'));
+          if(!isNaN(idx)) openProductModal(idx);
+        }
+      });
+    });
   }
 
   window.openProductModal = function(idx) {
     const prod = products[idx];
     if (!prod) return;
+    
+    // Mettre à jour le contenu de la modale
     document.getElementById("modalImg").src = prod.img;
     document.getElementById("modalName").innerText = prod.name;
-    document.getElementById("modalRegion").innerHTML = `📍 ${prod.region} | 🌿 ${prod.matiere}`;
+    document.getElementById("modalRegion").innerHTML = `📍 ${prod.region} &nbsp;|&nbsp; 🌿 ${prod.matiere}`;
     document.getElementById("modalDesc").innerText = prod.desc;
     document.getElementById("modalPrice").innerHTML = `💰 ${prod.price}`;
     document.getElementById("modalOrderLink").href = ORDER_LINK;
-    document.getElementById("modal").classList.add("active");
+    
+    // Empêcher le scroll du body
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('modal-open');
+    
+    // Afficher la modale
+    const modal = document.getElementById("modal");
+    modal.classList.add("active");
   };
 
   function closeModal() {
-    document.getElementById("modal").classList.remove("active");
+    const modal = document.getElementById("modal");
+    modal.classList.remove("active");
+    // Réactiver le scroll
+    document.body.style.overflow = '';
+    document.body.classList.remove('modal-open');
   }
 
+  // Fermer avec la croix
   document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+  
+  // Fermer en cliquant sur l'overlay
   document.getElementById("modal").addEventListener("click", (e) => {
-    if (e.target === document.getElementById("modal")) closeModal();
+    if (e.target === document.getElementById("modal")) {
+      closeModal();
+    }
   });
   
+  // Fermer avec la touche Échap
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && document.getElementById("modal").classList.contains("active")) {
+      closeModal();
+    }
+  });
+  
+  // Gestion de la recherche
   document.getElementById("searchInput").addEventListener("input", (e) => {
     currentSearchTerm = e.target.value;
     renderProductGrid();
   });
 
+  // Initialisation
   renderProductGrid();
 </script>
 </body>
