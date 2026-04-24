@@ -9,38 +9,55 @@
 
   body {
     font-family: 'Segoe UI', 'Tahoma', 'Noto Sans Arabic', sans-serif;
-    background: #f5ede2;  /* fond crème doux - pas de blanc agressif */
+    background: #f5ede2;  /* Fond crème unifié - PAS DE BLANC */
     color: #2C1810;
     direction: rtl;
     min-height: 100vh;
   }
 
-  /* ───── HEADER TOTALEMENT FIXE ───── */
+  /* ───── HEADER + PRODUITS TOTALEMENT FIXES ───── */
   .fixed-header {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    background: #f5ede2;  /* fond identique au body pour transparence visuelle */
+    background: #f5ede2;  /* Même fond que le body */
     padding: 12px 20px 0;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   }
 
-  /* ───── ESPACE POUR ÉVITER QUE LE CONTENU SOIT CACHÉ SOUS LE HEADER FIXE ───── */
-  .header-spacer {
-    height: auto;
-    padding-top: 260px;  /* ajusté pour la hauteur du header fixe */
+  /* ───── SECTION PRODUITS FIXE (juste sous l'offre) ───── */
+  .products-fixed-section {
+    position: fixed;
+    top: 240px;  /* Ajusté pour être juste sous le header */
+    left: 0;
+    right: 0;
+    z-index: 999;
+    background: #f5ede2;
+    padding: 0 20px;
+    max-height: calc(100vh - 240px);
+    overflow-y: auto;
   }
 
-  /* Ajustement responsive de l'espace */
+  /* Ajustement pour mobile */
   @media (max-width: 600px) {
-    .header-spacer {
-      padding-top: 230px;
+    .fixed-header { padding: 10px 12px 0; }
+    .products-fixed-section {
+      top: 210px;
+      padding: 0 12px;
+      max-height: calc(100vh - 210px);
     }
   }
 
-  /* ───── OFFER BANNER ───── */
+  @media (max-width: 380px) {
+    .products-fixed-section {
+      top: 230px;
+      max-height: calc(100vh - 230px);
+    }
+  }
+
+  /* ───── OFFER BANNER (fond sans blanc) ───── */
   .offer-banner {
     background: linear-gradient(135deg, #1E3A2F 0%, #2C4A3A 100%);
     border-radius: 24px;
@@ -80,7 +97,7 @@
     margin: 8px 0;
   }
   .offer-item {
-    background: #FFF9EF;
+    background: rgba(255,249,239,0.95);
     border-radius: 60px;
     padding: 4px 14px;
     font-size: 13px;
@@ -129,9 +146,9 @@
     box-shadow: 0 5px 12px rgba(0,0,0,0.2);
   }
 
-  /* ───── BARRE DE RECHERCHE FIXE DANS LE HEADER ───── */
+  /* ───── BARRE DE RECHERCHE (fond transparent/crème) ───── */
   .smart-controls {
-    background: rgba(245,237,226,0.98);
+    background: transparent;
     border-radius: 0 0 20px 20px;
     padding: 10px 0 12px;
     display: flex;
@@ -144,7 +161,7 @@
   .search-group input {
     padding: 11px 18px;
     border-radius: 40px;
-    border: 1px solid #F0E0CC;
+    border: 1px solid #E8D5BC;
     font-family: inherit;
     background: #FFFCF8;
     font-size: 15px;
@@ -163,20 +180,16 @@
     white-space: nowrap;
   }
 
-  /* ───── CONTENU SCROLLABLE ───── */
-  .page-body {
-    padding: 16px 20px 100px;
-  }
-
+  /* ───── GRILLE PRODUITS ───── */
   .product-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 20px;
     margin-top: 10px;
-    min-height: 200px;
+    padding-bottom: 20px;
   }
   .product-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.92);  /* légèrement transparent pour fond crème */
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 6px 14px rgba(0,0,0,0.05);
@@ -188,12 +201,13 @@
     transform: translateY(-5px);
     border-color: #EF9F27;
     box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+    background: white;
   }
   .product-img {
     width: 100%;
     height: 140px;
     object-fit: cover;
-    background: #F5EDE2;
+    background: #E8DCCC;
   }
   .product-info { padding: 10px; }
   .product-name { font-weight: 800; font-size: 13px; color: #2C1810; }
@@ -215,7 +229,7 @@
     border-radius: 28px;
   }
 
-  /* ───── MODAL ───── */
+  /* ───── MODAL (fond sans blanc) ───── */
   .modal-overlay {
     position: fixed;
     top: 0; left: 0;
@@ -254,6 +268,7 @@
     object-fit: cover;
     border-radius: 24px;
     margin: 10px 0;
+    background: #E8DCCC;
   }
   .modal-name { font-size: 22px; font-weight: 800; color: #2C1810; }
   .modal-price {
@@ -277,45 +292,33 @@
   }
   .modal-btn:hover { background: #854F0B; color: white; }
 
+  /* Pas de footer fixe, il reste dans le scroll */
   footer {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 10px;
     font-size: 12px;
     color: #C6AD89;
     padding: 15px;
     border-top: 1px solid #EFE3D5;
   }
 
-  /* ───── RESPONSIVE (MÊME FORMAT SUR MOBILE) ───── */
-  @media (max-width: 600px) {
-    .fixed-header { padding: 10px 12px 0; }
-    .header-spacer { padding-top: 230px; }
-    .offer-banner { padding: 12px 14px; border-radius: 18px; }
-    .offer-title { font-size: 17px; }
-    .new-price { font-size: 22px; }
-    .offer-item { font-size: 11px; padding: 4px 10px; }
-    .btn-order-offer { font-size: 14px; padding: 8px 18px; }
-    .page-body { padding: 12px 12px 100px; }
-    .product-grid { 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 12px; 
-    }
-    .product-img { height: 120px; }
-    .smart-controls { flex-direction: column; align-items: stretch; }
-    .stats { text-align: center; }
+  /* Scrollbar personnalisée */
+  .products-fixed-section::-webkit-scrollbar {
+    width: 5px;
   }
-
-  /* Très petits écrans */
-  @media (max-width: 380px) {
-    .header-spacer { padding-top: 250px; }
-    .offer-title { font-size: 15px; }
-    .product-name { font-size: 11px; }
+  .products-fixed-section::-webkit-scrollbar-track {
+    background: #E8DCCC;
+    border-radius: 10px;
+  }
+  .products-fixed-section::-webkit-scrollbar-thumb {
+    background: #C6AD89;
+    border-radius: 10px;
   }
 </style>
 </head>
 <body>
 
-<!-- ═══ HEADER TOTALEMENT FIXE (BANDEAU + RECHERCHE) ═══ -->
+<!-- ═══ HEADER FIXE (offre + recherche) ═══ -->
 <div class="fixed-header">
 
   <div class="offer-banner">
@@ -339,19 +342,15 @@
 
   <div class="smart-controls">
     <div class="search-group">
-      <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج... (اكتب تلقائياً)">
+      <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج...">
     </div>
     <div class="stats" id="productStats"></div>
   </div>
 
 </div>
-<!-- ═══ FIN HEADER FIXE ═══ -->
 
-<!-- ═══ ESPACEUR POUR COMPENSER LA HAUTEUR DU HEADER FIXE ═══ -->
-<div class="header-spacer"></div>
-
-<!-- ═══ CONTENU SCROLLABLE ═══ -->
-<div class="page-body">
+<!-- ═══ SECTION PRODUITS FIXE (scrollable à l'intérieur) ═══ -->
+<div class="products-fixed-section">
   <div id="productGrid" class="product-grid"></div>
   <footer>⭐ آراء عملائنا   🌸 مجموعة عطرية أصلية – منتجات طبيعية 100%</footer>
 </div>
@@ -371,24 +370,21 @@
 
 <script>
   const ORDER_LINK = "https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform";
-  let products = [];
-
-  const defaultProducts = [
-    { name: "عسل طبيعي", region: "الجزائر", matiere: "نقي 100%", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن والفيتامينات. 500 غ.", price: "2000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/1.jpg" },
-    { name: "عسل الكاليبتوس", region: "سكيكدة — عنابة", matiere: "نقي 100%", desc: "عسل الكاليبتوس الطبيعي. مفيد للجهاز التنفسي والمناعة. 1 كغ.", price: "2300 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/2.jpg" },
-    { name: "عسل الليمون", region: "عنابة", matiere: "نقي 100%", desc: "عسل الليمون الطبيعي. طعم منعش وفوائد صحية رائعة. 500 غ.", price: "2100 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/3.jpg" },
-    { name: "عسل السدر", region: "جبال الأوراس", matiere: "نقي 100%", desc: "من أجود أنواع العسل الجزائري. نقي 100% بدون إضافات. 1 كغ.", price: "2500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/4.jpg" },
-    { name: "زيت الأرجان", region: "تندوف", matiere: "مستخلص يدوياً", desc: "زيت الأرجان الطبيعي. مستخلص يدوياً للبشرة والشعر والأظافر. 30 مل.", price: "3500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/5.jpg" },
-    { name: "زيت الخروع", region: "الجزائر", matiere: "طبيعي 100%", desc: "زيت الخروع الطبيعي. لتكثيف الشعر وتقوية الأظافر وترطيب البشرة.", price: "1400 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/6.jpg" },
-    { name: "زيت التين الشوكي", region: "ورقلة", matiere: "نباتي وعذري", desc: "زيت التين الشوكي النادر. مضاد للشيخوخة. بدون ملونات ولا مواد حافظة. 30 مل.", price: "4500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/7.jpg" },
-    { name: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر 100%", desc: "زيت الحبة السوداء الطبيعي. شفاء من كل داء. معصور بارداً. 125 مل.", price: "1800 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/8.jpg" },
-    { name: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "زيت الزيتون البكر الممتاز. معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", price: "1900 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/9.jpg" },
-    { name: "ماء الأرز", region: "الجزائر", matiere: "طبيعي 100%", desc: "ماء الأرز الطبيعي. مرطّب ومنعش للبشرة. يقوّي الشعر ويمنحه البريق.", price: "1200 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/10.jpg" },
-    { name: "ماء اللافندر", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "ماء اللافندر الطبيعي. مهدئ ومنوّم طبيعي. للوسادة والبشرة والشعر.", price: "1600 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/11.jpg" },
-    { name: "ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", price: "1000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" }
+  
+  const products = [
+    { name: "🍯 عسل طبيعي", region: "الجزائر", matiere: "نقي 100%", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن والفيتامينات. 500 غ.", price: "2000 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🍯+عسل+طبيعي" },
+    { name: "🍯 عسل الكاليبتوس", region: "سكيكدة — عنابة", matiere: "نقي 100%", desc: "عسل الكاليبتوس الطبيعي. مفيد للجهاز التنفسي والمناعة. 1 كغ.", price: "2300 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🍯+عسل+الكاليبتوس" },
+    { name: "🍋 عسل الليمون", region: "عنابة", matiere: "نقي 100%", desc: "عسل الليمون الطبيعي. طعم منعش وفوائد صحية رائعة. 500 غ.", price: "2100 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🍋+عسل+الليمون" },
+    { name: "🌿 عسل السدر", region: "جبال الأوراس", matiere: "نقي 100%", desc: "من أجود أنواع العسل الجزائري. نقي 100% بدون إضافات. 1 كغ.", price: "2500 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🌿+عسل+السدر" },
+    { name: "🌰 زيت الأرجان", region: "تندوف", matiere: "مستخلص يدوياً", desc: "زيت الأرجان الطبيعي. مستخلص يدوياً للبشرة والشعر والأظافر. 30 مل.", price: "3500 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🌰+زيت+الأرجان" },
+    { name: "🌿 زيت الخروع", region: "الجزائر", matiere: "طبيعي 100%", desc: "زيت الخروع الطبيعي. لتكثيف الشعر وتقوية الأظافر وترطيب البشرة.", price: "1400 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🌿+زيت+الخروع" },
+    { name: "🌵 زيت التين الشوكي", region: "ورقلة", matiere: "نباتي وعذري", desc: "زيت التين الشوكي النادر. مضاد للشيخوخة. بدون ملونات ولا مواد حافظة. 30 مل.", price: "4500 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🌵+زيت+التين+الشوكي" },
+    { name: "⚫ زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر 100%", desc: "زيت الحبة السوداء الطبيعي. شفاء من كل داء. معصور بارداً. 125 مل.", price: "1800 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=⚫+زيت+الحبة+السوداء" },
+    { name: "🫒 زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "زيت الزيتون البكر الممتاز. معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", price: "1900 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🫒+زيت+الزيتون" },
+    { name: "🍚 ماء الأرز", region: "الجزائر", matiere: "طبيعي 100%", desc: "ماء الأرز الطبيعي. مرطّب ومنعش للبشرة. يقوّي الشعر ويمنحه البريق.", price: "1200 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🍚+ماء+الأرز" },
+    { name: "🌸 ماء اللافندر", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "ماء اللافندر الطبيعي. مهدئ ومنوّم طبيعي. للوسادة والبشرة والشعر.", price: "1600 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🌸+ماء+اللافندر" },
+    { name: "🍊 ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", price: "1000 DA", img: "https://placehold.co/400x300/E8DCCC/854F0B?text=🍊+ماء+الزهر" }
   ];
-
-  function loadData() { products = [...defaultProducts]; }
 
   let currentSearchTerm = "";
 
@@ -405,14 +401,16 @@
     let message = `📦 ${filtered.length} / ${products.length} منتج`;
     if(currentSearchTerm.trim() !== "") message += ` 🔍 ("${currentSearchTerm}")`;
     statsSpan.innerText = message;
+    
     if(filtered.length === 0) {
       container.innerHTML = `<div class="no-results">😔 لا توجد منتجات مطابقة<br>✏️ جرب كلمة أخرى</div>`;
       return;
     }
-    container.innerHTML = filtered.map((p) => {
-      const idx = products.findIndex(prod => prod.name === p.name && prod.price === p.price);
-      return `<div class="product-card" onclick="openProductModal(${idx})">
-        <img class="product-img" src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/170x140?text=صورة'">
+    
+    container.innerHTML = filtered.map((p, idx) => {
+      const originalIdx = products.findIndex(prod => prod.name === p.name && prod.price === p.price);
+      return `<div class="product-card" onclick="openProductModal(${originalIdx})">
+        <img class="product-img" src="${p.img}" alt="${p.name}">
         <div class="product-info">
           <div class="product-name">${p.name}</div>
           <div class="product-region">📍 ${p.region}</div>
@@ -434,18 +432,20 @@
     document.getElementById("modal").classList.add("active");
   };
 
-  function closeModal() { document.getElementById("modal").classList.remove("active"); }
+  function closeModal() { 
+    document.getElementById("modal").classList.remove("active"); 
+  }
 
   document.getElementById("closeModalBtn").addEventListener("click", closeModal);
   document.getElementById("modal").addEventListener("click", (e) => {
     if(e.target === document.getElementById("modal")) closeModal();
   });
+  
   document.getElementById("searchInput").addEventListener("input", () => {
     currentSearchTerm = document.getElementById("searchInput").value;
     renderProductGrid();
   });
 
-  loadData();
   renderProductGrid();
 </script>
 </body>
