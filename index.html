@@ -5,295 +5,261 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>صندوق كنوز أصيل - منتجات طبيعية فاخرة</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: 'Segoe UI', 'Tahoma', 'Noto Sans Arabic', sans-serif;
-    background: transparent;
-    color: #2C1810;
-    direction: rtl;
-  }
-
-  /* ───── STICKY WRAPPER ───── */
-  .sticky-top {
-    position: sticky;
-    top: 0;
-    z-index: 200;
-    background: #f5ede2; /* matches page bg */
-    padding: 12px 20px 0;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-  }
-
-  /* ───── OFFER BANNER ───── */
-  .offer-banner {
-    background: linear-gradient(135deg, #1E3A2F 0%, #2C4A3A 100%);
-    border-radius: 24px;
-    padding: 14px 18px;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid #F0CF8E;
-  }
-  .offer-banner::before {
-    content: "🎁";
-    font-size: 110px;
-    position: absolute;
-    bottom: -20px;
-    left: -15px;
-    opacity: 0.10;
-    pointer-events: none;
-  }
-  .offer-badge {
-    background: #D4AF37;
-    display: inline-block;
-    padding: 3px 12px;
-    border-radius: 50px;
-    font-weight: bold;
-    color: #1E3A2F;
-    font-size: 13px;
-  }
-  .offer-title {
-    font-size: 22px;
-    font-weight: 800;
-    color: #FAD974;
-    margin: 6px 0 4px;
-  }
-  .offer-products {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 8px 0;
-  }
-  .offer-item {
-    background: #FFF9EF;
-    border-radius: 60px;
-    padding: 4px 14px;
-    font-size: 13px;
-    font-weight: bold;
-    color: #854F0B;
-  }
-  .offer-bottom {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-    margin-top: 6px;
-  }
-  .price-block {
-    background: #2C1810;
-    display: inline-block;
-    padding: 6px 18px;
-    border-radius: 60px;
-    direction: ltr;
-  }
-  .new-price {
-    font-size: 26px;
-    font-weight: bold;
-    color: #FAD974;
-    direction: ltr;
-    unicode-bidi: embed;
-  }
-  .btn-order-offer {
-    background: #FAD974;
-    border: none;
-    padding: 9px 24px;
-    border-radius: 60px;
-    font-weight: bold;
-    font-size: 16px;
-    color: #1E3A2F;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    text-decoration: none;
-    transition: 0.2s;
-  }
-  .btn-order-offer:hover {
-    background: #FFE19C;
-    transform: scale(1.02);
-    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
-  }
-
-  /* ───── STICKY SEARCH BAR ───── */
-  .smart-controls {
-    background: rgba(255,255,255,0.92);
-    border-radius: 0 0 20px 20px;
-    padding: 10px 0 12px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .search-group { flex: 1; min-width: 180px; }
-  .search-group input {
-    padding: 11px 18px;
-    border-radius: 40px;
-    border: 1px solid #F0E0CC;
-    font-family: inherit;
-    background: #FFFCF8;
-    font-size: 15px;
-    width: 100%;
-  }
-  .search-group input:focus {
-    outline: none;
-    border-color: #EF9F27;
-    box-shadow: 0 0 0 2px rgba(239,159,39,0.2);
-  }
-  .stats {
-    font-size: 13px;
-    background: #F5EDE2;
-    padding: 8px 14px;
-    border-radius: 30px;
-    white-space: nowrap;
-  }
-
-  /* ───── PRODUCT GRID ───── */
-  .page-body {
-    padding: 16px 20px 100px;
-  }
-
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 20px;
-    margin-top: 10px;
-    min-height: 200px;
-  }
-  .product-card {
-    background: white;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.05);
-    transition: 0.2s;
-    cursor: pointer;
-    border: 1px solid #F0E0CC;
-  }
-  .product-card:hover {
-    transform: translateY(-5px);
-    border-color: #EF9F27;
-    box-shadow: 0 12px 20px rgba(0,0,0,0.1);
-  }
-  .product-img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    background: #F5EDE2;
-  }
-  .product-info { padding: 10px; }
-  .product-name { font-weight: 800; font-size: 13px; color: #2C1810; }
-  .product-region { font-size: 10px; color: #A48C70; margin: 4px 0; }
-  .product-price {
-    font-weight: bold;
-    color: #854F0B;
-    font-size: 14px;
-    direction: ltr;
-    text-align: right;
-  }
-  .no-results {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 50px;
-    font-size: 18px;
-    color: #A48C70;
-    background: rgba(255,249,239,0.9);
-    border-radius: 28px;
-  }
-
-
-
-  /* ───── MODAL ───── */
-  .modal-overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.2s;
-    padding: 20px;
-  }
-  .modal-overlay.active { visibility: visible; opacity: 1; }
-  .modal-container {
-    background: #FFFBF4;
-    max-width: 360px;
-    width: 100%;
-    border-radius: 32px;
-    padding: 22px;
-    position: relative;
-    text-align: center;
-    border: 1px solid #F7DBA2;
-  }
-  .close-modal {
-    position: absolute;
-    left: 18px; top: 12px;
-    font-size: 26px;
-    cursor: pointer;
-    color: #2C1810;
-    font-weight: bold;
-  }
-  .modal-img {
-    width: 100%; height: 180px;
-    object-fit: cover;
-    border-radius: 24px;
-    margin: 10px 0;
-  }
-  .modal-name { font-size: 22px; font-weight: 800; color: #2C1810; }
-  .modal-price {
-    font-size: 22px;
-    font-weight: bold;
-    color: #A6571A;
-    margin-top: 8px;
-    direction: ltr;
-    unicode-bidi: embed;
-  }
-  .modal-btn {
-    display: block;
-    background: #2C1810;
-    color: #FAD974;
-    padding: 12px;
-    border-radius: 60px;
-    text-decoration: none;
-    margin-top: 18px;
-    font-weight: bold;
-    transition: 0.2s;
-  }
-  .modal-btn:hover { background: #854F0B; color: white; }
-
-  footer {
-    text-align: center;
-    margin-top: 30px;
-    font-size: 12px;
-    color: #C6AD89;
-    padding: 15px;
-    border-top: 1px solid #EFE3D5;
-  }
-
-  /* ───── RESPONSIVE ───── */
-  @media (max-width: 600px) {
-    .sticky-top { padding: 10px 12px 0; }
-    .offer-banner { padding: 12px 14px; border-radius: 18px; }
-    .offer-title { font-size: 17px; }
-    .new-price { font-size: 22px; }
-    .offer-item { font-size: 11px; padding: 4px 10px; }
-    .btn-order-offer { font-size: 14px; padding: 8px 18px; }
-    .page-body { padding: 12px 12px 100px; }
-    .product-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    .product-img { height: 120px; }
-    .smart-controls { flex-direction: column; align-items: stretch; }
-    .stats { text-align: center; }
-    .fab { font-size: 15px; padding: 12px 28px; bottom: 18px; }
-  }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Segoe UI', 'Tahoma', 'Noto Sans Arabic', sans-serif;
+  background: #F5EDE2;
+  color: #2C1810;
+  direction: rtl;
+  min-height: 100vh;
+}
+.sticky-top {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: #F5EDE2;
+  padding: 10px 12px 0;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+.offer-banner {
+  background: linear-gradient(135deg, #1E3A2F 0%, #2C4A3A 100%);
+  border-radius: 20px;
+  padding: 12px 14px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #F0CF8E;
+}
+.offer-banner::before {
+  content: "🎁";
+  font-size: 90px;
+  position: absolute;
+  bottom: -15px;
+  left: -10px;
+  opacity: 0.10;
+  pointer-events: none;
+}
+.offer-badge {
+  background: #D4AF37;
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 50px;
+  font-weight: bold;
+  color: #1E3A2F;
+  font-size: 12px;
+}
+.offer-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #FAD974;
+  margin: 5px 0 4px;
+}
+.offer-products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0;
+}
+.offer-item {
+  background: rgba(255,249,239,0.15);
+  border: 1px solid rgba(240,207,142,0.4);
+  border-radius: 60px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #FAD974;
+}
+.offer-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+}
+.price-block {
+  background: rgba(44,24,16,0.5);
+  display: inline-block;
+  padding: 5px 14px;
+  border-radius: 60px;
+  direction: ltr;
+}
+.new-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #FAD974;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+.btn-order-offer {
+  background: #FAD974;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 60px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #1E3A2F;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+.btn-order-offer:hover { background: #FFE19C; }
+.smart-controls {
+  padding: 8px 0 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.search-group { flex: 1; min-width: 140px; }
+.search-group input {
+  padding: 10px 16px;
+  border-radius: 40px;
+  border: 1px solid #F0E0CC;
+  font-family: inherit;
+  background: #FFFCF8;
+  font-size: 14px;
+  width: 100%;
+}
+.search-group input:focus {
+  outline: none;
+  border-color: #EF9F27;
+  box-shadow: 0 0 0 2px rgba(239,159,39,0.2);
+}
+.stats {
+  font-size: 12px;
+  background: rgba(255,255,255,0.6);
+  padding: 7px 12px;
+  border-radius: 30px;
+  white-space: nowrap;
+  color: #5E4B34;
+}
+.page-body { padding: 12px 12px 80px; }
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 8px;
+}
+.product-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: 0.2s;
+  cursor: pointer;
+  border: 1px solid #F0E0CC;
+}
+.product-card:hover { transform: translateY(-3px); border-color: #EF9F27; }
+.product-card:active { transform: scale(0.98); }
+.product-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  background: #F5EDE2;
+  display: block;
+}
+.product-info { padding: 9px; }
+.product-name { font-weight: 800; font-size: 13px; color: #2C1810; line-height: 1.3; }
+.product-region { font-size: 10px; color: #A48C70; margin: 3px 0; }
+.product-price { font-weight: bold; color: #854F0B; font-size: 13px; direction: ltr; text-align: right; }
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+  color: #A48C70;
+  background: rgba(255,249,239,0.9);
+  border-radius: 20px;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.25s;
+}
+.modal-overlay.active { visibility: visible; opacity: 1; }
+.modal-container {
+  background: #FFFBF4;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 28px 28px 0 0;
+  padding: 20px 18px 30px;
+  position: relative;
+  text-align: center;
+  border-top: 1px solid #F7DBA2;
+  transform: translateY(30px);
+  transition: 0.25s;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-overlay.active .modal-container { transform: translateY(0); }
+.modal-handle {
+  width: 40px; height: 4px;
+  background: #E0CDB8;
+  border-radius: 4px;
+  margin: 0 auto 16px;
+}
+.close-modal {
+  position: absolute;
+  left: 16px; top: 14px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #2C1810;
+  font-weight: bold;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: #F0E0CC;
+}
+.modal-img {
+  width: 100%; height: 180px;
+  object-fit: cover;
+  border-radius: 20px;
+  margin: 0 0 12px;
+}
+.modal-name { font-size: 20px; font-weight: 800; color: #2C1810; }
+.modal-price {
+  font-size: 22px;
+  font-weight: bold;
+  color: #A6571A;
+  margin-top: 8px;
+  direction: ltr;
+}
+.modal-btn {
+  display: block;
+  background: #2C1810;
+  color: #FAD974;
+  padding: 14px;
+  border-radius: 60px;
+  text-decoration: none;
+  margin-top: 16px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: 0.2s;
+}
+.modal-btn:hover { background: #854F0B; color: white; }
+footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 11px;
+  color: #C6AD89;
+  padding: 12px;
+  border-top: 1px solid #EFE3D5;
+}
 </style>
 </head>
 <body>
 
-<!-- ═══ STICKY TOP (banner + search) ═══ -->
 <div class="sticky-top">
-
   <div class="offer-banner">
     <div class="offer-badge">🎁 عرض محدود</div>
     <div class="offer-title">صندوق كنوز أصيل - علبة هدايا فاخرة</div>
@@ -315,113 +281,101 @@
 
   <div class="smart-controls">
     <div class="search-group">
-      <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج... (اكتب تلقائياً)">
+      <input type="text" id="searchInput" placeholder="🔍 ابحث عن منتج...">
     </div>
     <div class="stats" id="productStats"></div>
   </div>
-
 </div>
-<!-- ═══ END STICKY TOP ═══ -->
 
-<!-- ═══ SCROLLABLE CONTENT ═══ -->
 <div class="page-body">
   <div id="productGrid" class="product-grid"></div>
-  <footer>⭐ آراء عملائنا   🌸 مجموعة عطرية أصلية – منتجات طبيعية 100%</footer>
+  <footer>⭐ آراء عملائنا &nbsp;🌸 منتجات طبيعية 100%</footer>
 </div>
 
-
-
-<!-- ═══ MODAL ═══ -->
 <div id="modal" class="modal-overlay">
   <div class="modal-container">
+    <div class="modal-handle"></div>
     <span class="close-modal" id="closeModalBtn">✕</span>
     <img id="modalImg" class="modal-img" src="" alt="صورة المنتج">
     <div id="modalName" class="modal-name"></div>
-    <div id="modalRegion" style="margin:5px 0; color:#5E4B34;"></div>
-    <div id="modalDesc" style="margin:10px 0; font-size:13px; line-height:1.5; color:#3A2A1C;"></div>
+    <div id="modalRegion" style="margin:5px 0; color:#5E4B34; font-size:13px;"></div>
+    <div id="modalDesc" style="margin:10px 0; font-size:13px; line-height:1.6; color:#3A2A1C; text-align:right;"></div>
     <div id="modalPrice" class="modal-price"></div>
     <a id="modalOrderLink" class="modal-btn" href="#" target="_blank">🛒 اطلب الآن</a>
   </div>
 </div>
 
 <script>
-  const ORDER_LINK = "https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform";
-  let products = [];
+const ORDER_LINK = "https://docs.google.com/forms/d/1tgkxzjKXPPjPPLBuztYfmG5ZYSzBSxII9tzEcsTdnIc/viewform";
+const products = [
+  { name: "عسل طبيعي", region: "الجزائر", matiere: "نقي 100%", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن والفيتامينات. 500 غ.", price: "2000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/1.jpg" },
+  { name: "عسل الكاليبتوس", region: "سكيكدة — عنابة", matiere: "نقي 100%", desc: "عسل الكاليبتوس الطبيعي. مفيد للجهاز التنفسي والمناعة. 1 كغ.", price: "2300 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/2.jpg" },
+  { name: "عسل الليمون", region: "عنابة", matiere: "نقي 100%", desc: "عسل الليمون الطبيعي. طعم منعش وفوائد صحية رائعة. 500 غ.", price: "2100 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/3.jpg" },
+  { name: "عسل السدر", region: "جبال الأوراس", matiere: "نقي 100%", desc: "من أجود أنواع العسل الجزائري. نقي 100% بدون إضافات. 1 كغ.", price: "2500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/4.jpg" },
+  { name: "زيت الأرجان", region: "تندوف", matiere: "مستخلص يدوياً", desc: "زيت الأرجان الطبيعي. مستخلص يدوياً للبشرة والشعر والأظافر. 30 مل.", price: "3500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/5.jpg" },
+  { name: "زيت الخروع", region: "الجزائر", matiere: "طبيعي 100%", desc: "زيت الخروع الطبيعي. لتكثيف الشعر وتقوية الأظافر وترطيب البشرة.", price: "1400 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/6.jpg" },
+  { name: "زيت التين الشوكي", region: "ورقلة", matiere: "نباتي وعذري", desc: "زيت التين الشوكي النادر. مضاد للشيخوخة. بدون ملونات ولا مواد حافظة. 30 مل.", price: "4500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/7.jpg" },
+  { name: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر 100%", desc: "زيت الحبة السوداء الطبيعي. شفاء من كل داء. معصور بارداً. 125 مل.", price: "1800 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/8.jpg" },
+  { name: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "زيت الزيتون البكر الممتاز. معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", price: "1900 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/9.jpg" },
+  { name: "ماء الأرز", region: "الجزائر", matiere: "طبيعي 100%", desc: "ماء الأرز الطبيعي. مرطّب ومنعش للبشرة. يقوّي الشعر ويمنحه البريق.", price: "1200 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/10.jpg" },
+  { name: "ماء اللافندر", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "ماء اللافندر الطبيعي. مهدئ ومنوّم طبيعي. للوسادة والبشرة والشعر.", price: "1600 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/11.jpg" },
+  { name: "ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", price: "1000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" }
+];
 
-  const defaultProducts = [
-    { name: "عسل طبيعي", region: "الجزائر", matiere: "نقي 100%", desc: "عسل طبيعي خالص مجموع يدوياً. غني بالمعادن والفيتامينات. 500 غ.", price: "2000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/1.jpg" },
-    { name: "عسل الكاليبتوس", region: "سكيكدة — عنابة", matiere: "نقي 100%", desc: "عسل الكاليبتوس الطبيعي. مفيد للجهاز التنفسي والمناعة. 1 كغ.", price: "2300 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/2.jpg" },
-    { name: "عسل الليمون", region: "عنابة", matiere: "نقي 100%", desc: "عسل الليمون الطبيعي. طعم منعش وفوائد صحية رائعة. 500 غ.", price: "2100 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/3.jpg" },
-    { name: "عسل السدر", region: "جبال الأوراس", matiere: "نقي 100%", desc: "من أجود أنواع العسل الجزائري. نقي 100% بدون إضافات. 1 كغ.", price: "2500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/4.jpg" },
-    { name: "زيت الأرجان", region: "تندوف", matiere: "مستخلص يدوياً", desc: "زيت الأرجان الطبيعي. مستخلص يدوياً للبشرة والشعر والأظافر. 30 مل.", price: "3500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/5.jpg" },
-    { name: "زيت الخروع", region: "الجزائر", matiere: "طبيعي 100%", desc: "زيت الخروع الطبيعي. لتكثيف الشعر وتقوية الأظافر وترطيب البشرة.", price: "1400 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/6.jpg" },
-    { name: "زيت التين الشوكي", region: "ورقلة", matiere: "نباتي وعذري", desc: "زيت التين الشوكي النادر. مضاد للشيخوخة. بدون ملونات ولا مواد حافظة. 30 مل.", price: "4500 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/7.jpg" },
-    { name: "زيت الحبة السوداء", region: "الجزائر", matiere: "بارد العصر 100%", desc: "زيت الحبة السوداء الطبيعي. شفاء من كل داء. معصور بارداً. 125 مل.", price: "1800 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/8.jpg" },
-    { name: "زيت الزيتون البكر", region: "القبائل الكبرى", matiere: "معصور باردًا", desc: "زيت الزيتون البكر الممتاز. معصور باردًا. غني بالأوميغا وفيتامين E. 500 مل.", price: "1900 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/9.jpg" },
-    { name: "ماء الأرز", region: "الجزائر", matiere: "طبيعي 100%", desc: "ماء الأرز الطبيعي. مرطّب ومنعش للبشرة. يقوّي الشعر ويمنحه البريق.", price: "1200 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/10.jpg" },
-    { name: "ماء اللافندر", region: "جبال الأوراس", matiere: "مقطّر طبيعي", desc: "ماء اللافندر الطبيعي. مهدئ ومنوّم طبيعي. للوسادة والبشرة والشعر.", price: "1600 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/11.jpg" },
-    { name: "ماء الزهر", region: "البليدة", matiere: "مقطّر من أزهار طازجة", desc: "ماء زهر البرتقال الطبيعي. للطبخ والعناية بالبشرة. جودة ممتازة. 250 مل.", price: "1000 DA", img: "https://raw.githubusercontent.com/assilboutique/-/main/12.jpg" }
-  ];
+let searchTerm = "";
 
-  function loadData() { products = [...defaultProducts]; }
+function render() {
+  const filtered = searchTerm.trim() === ""
+    ? [...products]
+    : products.filter(p => p.name.includes(searchTerm) || p.desc.includes(searchTerm));
 
-  let currentSearchTerm = "";
+  let msg = "📦 " + filtered.length + " / " + products.length + " منتج";
+  if (searchTerm.trim()) msg += ' 🔍 ("' + searchTerm + '")';
+  document.getElementById("productStats").innerText = msg;
 
-  function getFilteredProducts() {
-    if(currentSearchTerm.trim() === "") return [...products];
-    const term = currentSearchTerm.toLowerCase();
-    return products.filter(p => p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term));
+  if (filtered.length === 0) {
+    document.getElementById("productGrid").innerHTML = '<div class="no-results">😔 لا توجد منتجات مطابقة<br>✏️ جرب كلمة أخرى</div>';
+    return;
   }
+  document.getElementById("productGrid").innerHTML = filtered.map(function(p) {
+    var idx = products.indexOf(p);
+    return '<div class="product-card" onclick="openModal(' + idx + ')">' +
+      '<img class="product-img" src="' + p.img + '" alt="' + p.name + '" onerror="this.src=\'https://via.placeholder.com/160x120?text=صورة\'">' +
+      '<div class="product-info">' +
+        '<div class="product-name">' + p.name + '</div>' +
+        '<div class="product-region">📍 ' + p.region + '</div>' +
+        '<div class="product-price">💰 ' + p.price + '</div>' +
+      '</div></div>';
+  }).join('');
+}
 
-  function renderProductGrid() {
-    const filtered = getFilteredProducts();
-    const container = document.getElementById("productGrid");
-    const statsSpan = document.getElementById("productStats");
-    let message = `📦 ${filtered.length} / ${products.length} منتج`;
-    if(currentSearchTerm.trim() !== "") message += ` 🔍 ("${currentSearchTerm}")`;
-    statsSpan.innerText = message;
-    if(filtered.length === 0) {
-      container.innerHTML = `<div class="no-results">😔 لا توجد منتجات مطابقة<br>✏️ جرب كلمة أخرى</div>`;
-      return;
-    }
-    container.innerHTML = filtered.map((p) => {
-      const idx = products.findIndex(prod => prod.name === p.name && prod.price === p.price);
-      return `<div class="product-card" onclick="openProductModal(${idx})">
-        <img class="product-img" src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/170x140?text=صورة'">
-        <div class="product-info">
-          <div class="product-name">${p.name}</div>
-          <div class="product-region">📍 ${p.region}</div>
-          <div class="product-price">💰 ${p.price}</div>
-        </div>
-      </div>`;
-    }).join('');
-  }
+window.openModal = function(idx) {
+  var p = products[idx];
+  document.getElementById("modalImg").src = p.img;
+  document.getElementById("modalName").innerText = p.name;
+  document.getElementById("modalRegion").innerHTML = "📍 " + p.region + " | 🌿 " + (p.matiere || "طبيعي");
+  document.getElementById("modalDesc").innerText = p.desc;
+  document.getElementById("modalPrice").innerHTML = "💰 " + p.price;
+  document.getElementById("modalOrderLink").href = ORDER_LINK;
+  document.getElementById("modal").classList.add("active");
+  document.body.style.overflow = "hidden";
+};
 
-  window.openProductModal = function(idx) {
-    const prod = products[idx];
-    if(!prod) return;
-    document.getElementById("modalImg").src = prod.img;
-    document.getElementById("modalName").innerText = prod.name;
-    document.getElementById("modalRegion").innerHTML = `📍 ${prod.region} | 🌿 ${prod.matiere || "طبيعي"}`;
-    document.getElementById("modalDesc").innerText = prod.desc;
-    document.getElementById("modalPrice").innerHTML = `💰 ${prod.price}`;
-    document.getElementById("modalOrderLink").href = ORDER_LINK;
-    document.getElementById("modal").classList.add("active");
-  };
+function closeModal() {
+  document.getElementById("modal").classList.remove("active");
+  document.body.style.overflow = "";
+}
 
-  function closeModal() { document.getElementById("modal").classList.remove("active"); }
+document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+document.getElementById("modal").addEventListener("click", function(e) {
+  if (e.target === document.getElementById("modal")) closeModal();
+});
+document.getElementById("searchInput").addEventListener("input", function(e) {
+  searchTerm = e.target.value;
+  render();
+});
 
-  document.getElementById("closeModalBtn").addEventListener("click", closeModal);
-  document.getElementById("modal").addEventListener("click", (e) => {
-    if(e.target === document.getElementById("modal")) closeModal();
-  });
-  document.getElementById("searchInput").addEventListener("input", () => {
-    currentSearchTerm = document.getElementById("searchInput").value;
-    renderProductGrid();
-  });
-
-  loadData();
-  renderProductGrid();
+render();
 </script>
 </body>
 </html>
